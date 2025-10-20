@@ -12,7 +12,7 @@ import {
   //   await loadIssuersToUi();
   await loadCompaniesToUi("client");
   // LOGIC TO DISPLAY ISSUERS DETAIL IN THE DETAILS MODAL
-  //   await loadIssuersDataToModal();
+  await loadIssuersDataToModal("client");
   // LOGIC TO ADD NEW ISSUER
   //   await addIssuer();
   // LOGIC TO DELETE ISSUER

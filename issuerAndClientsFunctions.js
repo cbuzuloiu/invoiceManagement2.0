@@ -243,54 +243,105 @@ function loadOneIssuerToTheUI(issuer) {
 
 // LOAD ISSUER DATA TO THE MODAL WINDOW
 // de facut modificarile
-export async function loadIssuersDataToModal() {
-  try {
-    const issuers = cachedIssuers;
+export async function loadIssuersDataToModal(clientType) {
+  if (clientType === "issuer") {
+    try {
+      const issuers = cachedIssuers;
 
-    // MODAL VAR - has to be declared after the action buttons are loaded.
-    const issuerDetailBtn = Array.from(
-      document.querySelectorAll(".issuer-detail")
-    ); // get the node list and transforms it in an array
-    const modalActive = document.querySelector(".modal-overlay");
-    const closeModal = document.querySelector("#close_modal");
+      // MODAL VAR - has to be declared after the action buttons are loaded.
+      const issuerDetailBtn = Array.from(
+        document.querySelectorAll(".issuer-detail")
+      ); // get the node list and transforms it in an array
+      const modalActive = document.querySelector(".modal-overlay");
+      const closeModal = document.querySelector("#close_modal");
 
-    // MODAL DETAILS
-    for (const button of issuerDetailBtn) {
-      button.addEventListener("click", () => {
-        const modalTitle = document.querySelector("#modal-title-name");
-        const modalCUI = document.querySelector("#modal-cui");
-        const modalNrReg = document.querySelector("#modal-nrReg");
-        const modalAddress = document.querySelector("#modal-address");
-        const modalBankName = document.querySelector("#modal-bank-name");
-        const modalBankAccount = document.querySelector("#bank-account");
-        const modalPhone = document.querySelector("#modal-phone");
-        const modalEmail = document.querySelector("#modal-email");
-        const modalWeb = document.querySelector("#modal-web");
+      // MODAL DETAILS
+      for (const button of issuerDetailBtn) {
+        button.addEventListener("click", () => {
+          const modalTitle = document.querySelector("#modal-title-name");
+          const modalCUI = document.querySelector("#modal-cui");
+          const modalNrReg = document.querySelector("#modal-nrReg");
+          const modalAddress = document.querySelector("#modal-address");
+          const modalBankName = document.querySelector("#modal-bank-name");
+          const modalBankAccount = document.querySelector("#bank-account");
+          const modalPhone = document.querySelector("#modal-phone");
+          const modalEmail = document.querySelector("#modal-email");
+          const modalWeb = document.querySelector("#modal-web");
 
-        const indexOfIssuer = issuerDetailBtn.indexOf(button);
-        modalActive.classList.add("show");
+          const indexOfIssuer = issuerDetailBtn.indexOf(button);
+          modalActive.classList.add("show");
 
-        modalTitle.textContent = issuers[indexOfIssuer].name;
-        modalCUI.textContent = issuers[indexOfIssuer].cui;
-        modalNrReg.textContent = issuers[indexOfIssuer].nr_reg_com;
-        modalAddress.textContent = issuers[indexOfIssuer].address;
-        modalBankName.textContent = issuers[indexOfIssuer].bank_name;
-        modalBankAccount.textContent = issuers[indexOfIssuer].bank_account;
-        modalPhone.textContent = issuers[indexOfIssuer].phone;
-        modalEmail.textContent = issuers[indexOfIssuer].email;
-        modalWeb.textContent = issuers[indexOfIssuer].website;
+          modalTitle.textContent = issuers[indexOfIssuer].name;
+          modalCUI.textContent = issuers[indexOfIssuer].cui;
+          modalNrReg.textContent = issuers[indexOfIssuer].nr_reg_com;
+          modalAddress.textContent = issuers[indexOfIssuer].address;
+          modalBankName.textContent = issuers[indexOfIssuer].bank_name;
+          modalBankAccount.textContent = issuers[indexOfIssuer].bank_account;
+          modalPhone.textContent = issuers[indexOfIssuer].phone;
+          modalEmail.textContent = issuers[indexOfIssuer].email;
+          modalWeb.textContent = issuers[indexOfIssuer].website;
+        });
+      }
+
+      closeModal.addEventListener("click", () => {
+        modalActive.classList.remove("show");
       });
+    } catch (error) {
+      console.error(
+        "There was a problem with loading the issuers to the UI:",
+        error
+      );
+      return [];
     }
+  } else if (clientType === "client") {
+    try {
+      const clients = cachedClients;
 
-    closeModal.addEventListener("click", () => {
-      modalActive.classList.remove("show");
-    });
-  } catch (error) {
-    console.error(
-      "There was a problem with loading the issuers to the UI:",
-      error
-    );
-    return [];
+      // MODAL VAR - has to be declared after the action buttons are loaded.
+      const clientDetailBtn = Array.from(
+        document.querySelectorAll(".client-detail")
+      ); // get the node list and transforms it in an array
+      const modalActive = document.querySelector(".modal-overlay");
+      const closeModal = document.querySelector("#close_modal");
+
+      // MODAL DETAILS
+      for (const button of clientDetailBtn) {
+        button.addEventListener("click", () => {
+          const modalTitle = document.querySelector("#modal-title-name");
+          const modalCUI = document.querySelector("#modal-cui");
+          const modalNrReg = document.querySelector("#modal-nrReg");
+          const modalAddress = document.querySelector("#modal-address");
+          const modalBankName = document.querySelector("#modal-bank-name");
+          const modalBankAccount = document.querySelector("#bank-account");
+          const modalPhone = document.querySelector("#modal-phone");
+          const modalEmail = document.querySelector("#modal-email");
+          const modalWeb = document.querySelector("#modal-web");
+
+          const indexOfClient = clientDetailBtn.indexOf(button);
+          modalActive.classList.add("show");
+
+          modalTitle.textContent = clients[indexOfClient].name;
+          modalCUI.textContent = clients[indexOfClient].cui;
+          modalNrReg.textContent = clients[indexOfClient].nr_reg_com;
+          modalAddress.textContent = clients[indexOfClient].address;
+          modalBankName.textContent = clients[indexOfClient].bank_name;
+          modalBankAccount.textContent = clients[indexOfClient].bank_account;
+          modalPhone.textContent = clients[indexOfClient].phone;
+          modalEmail.textContent = clients[indexOfClient].email;
+          modalWeb.textContent = clients[indexOfClient].website;
+        });
+      }
+
+      closeModal.addEventListener("click", () => {
+        modalActive.classList.remove("show");
+      });
+    } catch (error) {
+      console.error(
+        "There was a problem with loading the issuers to the UI:",
+        error
+      );
+      return [];
+    }
   }
 }
 

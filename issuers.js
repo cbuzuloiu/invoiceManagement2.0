@@ -11,7 +11,7 @@ import {
   // LOGIC TO LOAD DATA TO THE UI
   await loadCompaniesToUi("issuer");
   // LOGIC TO DISPLAY ISSUERS DETAIL IN THE DETAILS MODAL
-  await loadIssuersDataToModal();
+  await loadIssuersDataToModal("issuer");
 
   // LOGIC TO ADD NEW ISSUER
   await addIssuer();
