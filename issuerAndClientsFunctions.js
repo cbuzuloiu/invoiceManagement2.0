@@ -211,25 +211,26 @@ export async function loadCompaniesToUi(clientType) {
 }
 
 // LOAD ONE ISSUER TO THE UI
-function loadOneIssuerToTheUI(issuer) {
+function loadOneCompanyToTheUI(lastCachedCompany, clientType) {
   const tableCompanyName = document.querySelector("#table-name");
   const tableCompnayEmail = document.querySelector("#table-email");
   const tableCompanyPhone = document.querySelector("#table-phone");
   const tableActions = document.querySelector("#table-actions");
 
   // LOADING NAME
-  createTableRow(issuer.name, tableCompanyName);
+  createTableRow(lastCachedCompany.name, tableCompanyName);
 
   // LOADING EMAIL
-  createTableRow(issuer.email, tableCompnayEmail);
+  createTableRow(lastCachedCompany.email, tableCompnayEmail);
 
   // LOADING PHONE
-  createTableRow(issuer.phone, tableCompanyPhone);
+  createTableRow(lastCachedCompany.phone, tableCompanyPhone);
 
   // LOADING ACTIONS
-  tableActions.insertAdjacentHTML(
-    "beforeend",
-    `
+  if (clientType === "issuer") {
+    tableActions.insertAdjacentHTML(
+      "beforeend",
+      `
               <div class="table-r">
                 <div class="table-actions">
                   <button class="btn small issuer-detail">🔎 Details</button>
@@ -238,7 +239,23 @@ function loadOneIssuerToTheUI(issuer) {
                 </div>
               </div>
       `
-  );
+    );
+  }
+
+  if (clientType === "client") {
+    tableActions.insertAdjacentHTML(
+      "beforeend",
+      `
+              <div class="table-r">
+                <div class="table-actions">
+                  <button class="btn small client-detail">🔎 Details</button>
+                  <button class="btn small client-edit">✏️ Edit</button>
+                  <button class="btn small danger client-delete">🗑️ Delete</button>
+                </div>
+              </div>
+      `
+    );
+  }
 }
 
 // LOAD ISSUER DATA TO THE MODAL WINDOW
@@ -380,7 +397,7 @@ export async function addCompanie(clientType) {
 
           //LOAD TO THE UI THE ISSUER ADDED
           cachedIssuers.push(result.issuer);
-          loadOneIssuerToTheUI(cachedIssuers.at(-1));
+          loadOneCompanyToTheUI(cachedIssuers.at(-1), "issuer");
           loadCompanieDataToModal(clientType);
 
           form.reset(); // clears all inputs
@@ -404,7 +421,7 @@ export async function addCompanie(clientType) {
 
           //LOAD TO THE UI THE ISSUER ADDED
           cachedClients.push(result.client);
-          loadOneIssuerToTheUI(cachedClients.at(-1));
+          loadOneCompanyToTheUI(cachedClients.at(-1), "client");
           loadCompanieDataToModal(clientType);
 
           form.reset(); // clears all inputs
