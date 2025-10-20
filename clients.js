@@ -18,5 +18,5 @@ import {
   // LOGIC TO DELETE ISSUER
   await deleteIssuer("client");
   // LOGIC TO EDIT A ISSUER
-  //   await editIssuer();
+  await editIssuer("client");
 })();

@@ -381,7 +381,7 @@ export async function addIssuer(clientType) {
           //LOAD TO THE UI THE ISSUER ADDED
           cachedIssuers.push(result.issuer);
           loadOneIssuerToTheUI(cachedIssuers.at(-1));
-          loadIssuersDataToModal();
+          loadIssuersDataToModal(clientType);
 
           form.reset(); // clears all inputs
         } else {
@@ -405,7 +405,7 @@ export async function addIssuer(clientType) {
           //LOAD TO THE UI THE ISSUER ADDED
           cachedClients.push(result.client);
           loadOneIssuerToTheUI(cachedClients.at(-1));
-          loadIssuersDataToModal();
+          loadIssuersDataToModal(clientType);
 
           form.reset(); // clears all inputs
         } else {
@@ -569,77 +569,154 @@ export async function deleteIssuer(clientType) {
 }
 
 // Edit Issuers
-export async function editIssuer() {
+export async function editIssuer(clientType) {
   document.addEventListener("click", async (e) => {
-    const btn = e.target.closest(".issuer-edit");
-    if (!btn) return; // not an edit click
+    if (clientType === "issuer") {
+      const btn = e.target.closest(".issuer-edit");
+      if (!btn) return; // not an edit click
 
-    const btns = Array.from(document.querySelectorAll(".issuer-edit"));
-    const modalActive = document.querySelector(".modal-overlay-edit");
-    const modalClose = document.querySelector(".edit-modal-close");
-    const selectNameOfIssuer = document.querySelector(".modal-overlay-edit h2");
-    const submitEdit = document.querySelector(".edit-modal-submit");
+      const btns = Array.from(document.querySelectorAll(".issuer-edit"));
+      const modalActive = document.querySelector(".modal-overlay-edit");
+      const modalClose = document.querySelector(".edit-modal-close");
+      const selectNameOfIssuer = document.querySelector(
+        ".modal-overlay-edit h2"
+      );
+      const submitEdit = document.querySelector(".edit-modal-submit");
 
-    modalActive.classList.add("show-edit");
+      modalActive.classList.add("show-edit");
 
-    // find btn index - btn index is the same index for cachedIssuers
-    const btnIndex = btns.indexOf(btn);
+      // find btn index - btn index is the same index for cachedIssuers
+      const btnIndex = btns.indexOf(btn);
 
-    // Display name of the issuer in the modal
-    selectNameOfIssuer.textContent = cachedIssuers?.[btnIndex]?.name;
-    if (!selectNameOfIssuer) {
-      console.error("No cached issuer found for index", btnIndex);
-      return;
-    }
-
-    const editId = cachedIssuers[btnIndex].id;
-
-    // Clean old event listener if modal reused
-    submitEdit.replaceWith(submitEdit.cloneNode(true));
-    const newSubmitEdit = document.querySelector(".edit-modal-submit");
-
-    newSubmitEdit.addEventListener("click", async (e) => {
-      e.preventDefault();
-
-      const formEdit = document.querySelector(".form-edit");
-
-      // collect form data
-      const formData = new FormData(formEdit);
-      const data = Object.fromEntries(formData.entries());
-
-      try {
-        const response = await fetch(
-          `http://127.0.0.1:8000/editissuer/${editId}`,
-          {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(data),
-          }
-        );
-
-        const result = await response.json();
-
-        if (!response.ok) {
-          alert(result.error || "Update failed!");
-          return;
-        }
-
-        alert("Issuer updated successfully!");
-        modalActive.classList.remove("show-edit");
-
-        cachedIssuers = null;
-        await fetchCompanyesFromApi(); // refresh data
-        await loadCompaniesToUi();
-        await loadIssuersDataToModal();
-
-        formEdit.reset();
-      } catch (error) {
-        console.error("Error updating issuer:", err);
+      // Display name of the issuer in the modal
+      selectNameOfIssuer.textContent = cachedIssuers?.[btnIndex]?.name;
+      if (!selectNameOfIssuer) {
+        console.error("No cached issuer found for index", btnIndex);
+        return;
       }
-    });
 
-    modalClose.addEventListener("click", () => {
-      modalActive.classList.remove("show-edit");
-    });
+      const editId = cachedIssuers[btnIndex].id;
+
+      // Clean old event listener if modal reused
+      submitEdit.replaceWith(submitEdit.cloneNode(true));
+      const newSubmitEdit = document.querySelector(".edit-modal-submit");
+
+      newSubmitEdit.addEventListener("click", async (e) => {
+        e.preventDefault();
+
+        const formEdit = document.querySelector(".form-edit");
+
+        // collect form data
+        const formData = new FormData(formEdit);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+          const response = await fetch(
+            `http://127.0.0.1:8000/editissuer/${editId}`,
+            {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            }
+          );
+
+          const result = await response.json();
+
+          if (!response.ok) {
+            alert(result.error || "Update failed!");
+            return;
+          }
+
+          alert("Issuer updated successfully!");
+          modalActive.classList.remove("show-edit");
+
+          cachedIssuers = null;
+          await fetchCompanyesFromApi(clientType); // refresh data
+          await loadCompaniesToUi(clientType);
+          await loadIssuersDataToModal(clientType);
+
+          formEdit.reset();
+        } catch (error) {
+          console.error("Error updating issuer:", err);
+        }
+      });
+
+      modalClose.addEventListener("click", () => {
+        modalActive.classList.remove("show-edit");
+      });
+    } else if (clientType === "client") {
+      const btn = e.target.closest(".client-edit");
+      if (!btn) return; // not an edit click
+
+      const btns = Array.from(document.querySelectorAll(".client-edit"));
+      const modalActive = document.querySelector(".modal-overlay-edit");
+      const modalClose = document.querySelector(".edit-modal-close");
+      const selectNameOfClient = document.querySelector(
+        ".modal-overlay-edit h2"
+      );
+      const submitEdit = document.querySelector(".edit-modal-submit");
+
+      modalActive.classList.add("show-edit");
+
+      // find btn index - btn index is the same index for cachedIssuers
+      const btnIndex = btns.indexOf(btn);
+
+      // Display name of the issuer in the modal
+      selectNameOfClient.textContent = cachedClients?.[btnIndex]?.name;
+      if (!selectNameOfClient) {
+        console.error("No cached client found for index", btnIndex);
+        return;
+      }
+
+      const editId = cachedClients[btnIndex].id;
+
+      // Clean old event listener if modal reused
+      submitEdit.replaceWith(submitEdit.cloneNode(true));
+      const newSubmitEdit = document.querySelector(".edit-modal-submit");
+
+      newSubmitEdit.addEventListener("click", async (e) => {
+        e.preventDefault();
+
+        const formEdit = document.querySelector(".form-edit");
+
+        // collect form data
+        const formData = new FormData(formEdit);
+        const data = Object.fromEntries(formData.entries());
+
+        try {
+          const response = await fetch(
+            `http://127.0.0.1:8000/editclient/${editId}`,
+            {
+              method: "PUT",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(data),
+            }
+          );
+
+          const result = await response.json();
+
+          if (!response.ok) {
+            alert(result.error || "Update failed!");
+            return;
+          }
+
+          alert("Issuer updated successfully!");
+          modalActive.classList.remove("show-edit");
+
+          cachedClients = null;
+          await fetchCompanyesFromApi(clientType); // refresh data
+          await loadCompaniesToUi(clientType);
+          await loadIssuersDataToModal(clientType);
+
+          formEdit.reset();
+        } catch (error) {
+          console.error("Error updating issuer:", err);
+        }
+      });
+
+      modalClose.addEventListener("click", () => {
+        modalActive.classList.remove("show-edit");
+      });
+    }
   });
 }
