@@ -427,9 +427,18 @@ export async function addIssuer(clientType) {
 }
 
 // DELETE ISSUER
-export async function deleteIssuer() {
+export async function deleteIssuer(clientType) {
   document.addEventListener("click", async (e) => {
-    const btn = e.target.closest(".issuer-delete");
+    let btn;
+
+    if (clientType === "issuer") {
+      btn = e.target.closest(".issuer-delete");
+    }
+
+    if (clientType === "client") {
+      btn = e.target.closest(".client-delete");
+    }
+
     if (!btn) return; // not a delete click
 
     // console.log(btn);
@@ -475,40 +484,81 @@ export async function deleteIssuer() {
 
       // dataIndex corresponds to your cachedIssuers array (exclude header)
       const dataIndex = rowIndex - 1;
-      const idOfIssuer = cachedIssuers?.[dataIndex]?.id;
-      if (!idOfIssuer) {
-        console.error("No cached issuer found for index", dataIndex);
-        return;
-      }
 
-      try {
-        // call backend to delete (optional but recommended)
-        const res = await fetch(
-          `http://127.0.0.1:8000/deleteissuer/${encodeURIComponent(
-            idOfIssuer
-          )}`,
-          {
-            method: "DELETE",
+      if (clientType === "issuer") {
+        const idOfIssuer = cachedIssuers?.[dataIndex]?.id;
+        if (!idOfIssuer) {
+          console.error("No cached issuer found for index", dataIndex);
+          return;
+        }
+
+        try {
+          // call backend to delete (optional but recommended)
+          const res = await fetch(
+            `http://127.0.0.1:8000/deleteissuer/${encodeURIComponent(
+              idOfIssuer
+            )}`,
+            {
+              method: "DELETE",
+            }
+          );
+          const body = await res.json();
+          if (!res.ok) throw new Error(body.error || "Delete failed");
+
+          // remove the corresponding .table-r in every column (use rowIndex)
+          nameRows[rowIndex]?.remove();
+          emailRows[rowIndex]?.remove();
+          phoneRows[rowIndex]?.remove();
+          actionRows[rowIndex]?.remove();
+
+          // console.log("Id of issuer is: ", idOfIssuer);
+          // console.log("cached issuers are before delete:", [...cachedIssuers]);
+
+          // update your cached array
+          cachedIssuers.splice(dataIndex, 1);
+          // console.log("cached issuers are after delete:", cachedIssuers);
+        } catch (err) {
+          console.error("Delete failed:", err);
+          alert("Failed to delete issuer: " + err.message);
+        }
+      } else if (clientType === "client") {
+        {
+          const idOfClient = cachedClients?.[dataIndex]?.id;
+          if (!idOfClient) {
+            console.error("No cached issuer found for index", dataIndex);
+            return;
           }
-        );
-        const body = await res.json();
-        if (!res.ok) throw new Error(body.error || "Delete failed");
 
-        // remove the corresponding .table-r in every column (use rowIndex)
-        nameRows[rowIndex]?.remove();
-        emailRows[rowIndex]?.remove();
-        phoneRows[rowIndex]?.remove();
-        actionRows[rowIndex]?.remove();
+          try {
+            // call backend to delete (optional but recommended)
+            const res = await fetch(
+              `http://127.0.0.1:8000/deleteclient/${encodeURIComponent(
+                idOfClient
+              )}`,
+              {
+                method: "DELETE",
+              }
+            );
+            const body = await res.json();
+            if (!res.ok) throw new Error(body.error || "Delete failed");
 
-        // console.log("Id of issuer is: ", idOfIssuer);
-        // console.log("cached issuers are before delete:", [...cachedIssuers]);
+            // remove the corresponding .table-r in every column (use rowIndex)
+            nameRows[rowIndex]?.remove();
+            emailRows[rowIndex]?.remove();
+            phoneRows[rowIndex]?.remove();
+            actionRows[rowIndex]?.remove();
 
-        // update your cached array
-        cachedIssuers.splice(dataIndex, 1);
-        // console.log("cached issuers are after delete:", cachedIssuers);
-      } catch (err) {
-        console.error("Delete failed:", err);
-        alert("Failed to delete issuer: " + err.message);
+            // console.log("Id of issuer is: ", idOfIssuer);
+            // console.log("cached issuers are before delete:", [...cachedIssuers]);
+
+            // update your cached array
+            cachedClients.splice(dataIndex, 1);
+            // console.log("cached issuers are after delete:", cachedIssuers);
+          } catch (err) {
+            console.error("Delete failed:", err);
+            alert("Failed to delete issuer: " + err.message);
+          }
+        }
       }
     });
 

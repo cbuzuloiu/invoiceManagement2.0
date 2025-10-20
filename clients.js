@@ -16,7 +16,7 @@ import {
   // LOGIC TO ADD NEW ISSUER
   await addIssuer("client");
   // LOGIC TO DELETE ISSUER
-  //   await deleteIssuer();
+  await deleteIssuer("client");
   // LOGIC TO EDIT A ISSUER
   //   await editIssuer();
 })();

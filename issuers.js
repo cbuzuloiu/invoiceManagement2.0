@@ -17,7 +17,7 @@ import {
   await addIssuer("issuer");
 
   // LOGIC TO DELETE ISSUER
-  await deleteIssuer();
+  await deleteIssuer("issuer");
 
   // LOGIC TO EDIT A ISSUER
   await editIssuer();
