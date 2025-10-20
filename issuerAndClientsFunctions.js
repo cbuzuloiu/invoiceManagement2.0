@@ -242,7 +242,7 @@ function loadOneIssuerToTheUI(issuer) {
 }
 
 // LOAD ISSUER DATA TO THE MODAL WINDOW
-export async function loadIssuersDataToModal(clientType) {
+export async function loadCompanieDataToModal(clientType) {
   if (clientType === "issuer") {
     try {
       const issuers = cachedIssuers;
@@ -345,7 +345,7 @@ export async function loadIssuersDataToModal(clientType) {
 }
 
 // ADD A NEW ISSUER
-export async function addIssuer(clientType) {
+export async function addCompanie(clientType) {
   const form = document.querySelector(".form");
 
   form.addEventListener("submit", async (e) => {
@@ -381,7 +381,7 @@ export async function addIssuer(clientType) {
           //LOAD TO THE UI THE ISSUER ADDED
           cachedIssuers.push(result.issuer);
           loadOneIssuerToTheUI(cachedIssuers.at(-1));
-          loadIssuersDataToModal(clientType);
+          loadCompanieDataToModal(clientType);
 
           form.reset(); // clears all inputs
         } else {
@@ -405,7 +405,7 @@ export async function addIssuer(clientType) {
           //LOAD TO THE UI THE ISSUER ADDED
           cachedClients.push(result.client);
           loadOneIssuerToTheUI(cachedClients.at(-1));
-          loadIssuersDataToModal(clientType);
+          loadCompanieDataToModal(clientType);
 
           form.reset(); // clears all inputs
         } else {
@@ -427,7 +427,7 @@ export async function addIssuer(clientType) {
 }
 
 // DELETE ISSUER
-export async function deleteIssuer(clientType) {
+export async function deleteCompanie(clientType) {
   document.addEventListener("click", async (e) => {
     let btn;
 
@@ -569,7 +569,7 @@ export async function deleteIssuer(clientType) {
 }
 
 // Edit Issuers
-export async function editIssuer(clientType) {
+export async function editCompanie(clientType) {
   document.addEventListener("click", async (e) => {
     if (clientType === "issuer") {
       const btn = e.target.closest(".issuer-edit");
@@ -633,7 +633,7 @@ export async function editIssuer(clientType) {
           cachedIssuers = null;
           await fetchCompanyesFromApi(clientType); // refresh data
           await loadCompaniesToUi(clientType);
-          await loadIssuersDataToModal(clientType);
+          await loadCompanieDataToModal(clientType);
 
           formEdit.reset();
         } catch (error) {
@@ -706,7 +706,7 @@ export async function editIssuer(clientType) {
           cachedClients = null;
           await fetchCompanyesFromApi(clientType); // refresh data
           await loadCompaniesToUi(clientType);
-          await loadIssuersDataToModal(clientType);
+          await loadCompanieDataToModal(clientType);
 
           formEdit.reset();
         } catch (error) {

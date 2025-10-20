@@ -1,9 +1,9 @@
 import {
   loadCompaniesToUi,
-  loadIssuersDataToModal,
-  addIssuer,
-  deleteIssuer,
-  editIssuer,
+  loadCompanieDataToModal,
+  addCompanie,
+  deleteCompanie,
+  editCompanie,
 } from "./issuerAndClientsFunctions.js";
 
 // MAIN LOGIC OF APP
@@ -12,11 +12,11 @@ import {
   //   await loadIssuersToUi();
   await loadCompaniesToUi("client");
   // LOGIC TO DISPLAY ISSUERS DETAIL IN THE DETAILS MODAL
-  await loadIssuersDataToModal("client");
+  await loadCompanieDataToModal("client");
   // LOGIC TO ADD NEW ISSUER
-  await addIssuer("client");
+  await addCompanie("client");
   // LOGIC TO DELETE ISSUER
-  await deleteIssuer("client");
+  await deleteCompanie("client");
   // LOGIC TO EDIT A ISSUER
-  await editIssuer("client");
+  await editCompanie("client");
 })();
