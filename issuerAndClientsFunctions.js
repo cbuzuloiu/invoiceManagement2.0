@@ -16,8 +16,15 @@ export async function fetchCompanyesFromApi(clientType) {
       }
 
       const data = await response.json();
-      cachedIssuers = data; // Cache the result
-      return data;
+      const sorted = Array.isArray(data)
+        ? data.slice().sort((a, b) => {
+            const ai = Number(a?.id ?? Number.MAX_SAFE_INTEGER);
+            const bi = Number(b?.id ?? Number.MAX_SAFE_INTEGER);
+            return ai - bi;
+          })
+        : [];
+      cachedIssuers = sorted; // Cache the sorted result
+      return sorted;
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
       return [];
@@ -35,8 +42,15 @@ export async function fetchCompanyesFromApi(clientType) {
       }
 
       const data = await response.json();
-      cachedClients = data; // Cache the result
-      return data;
+      const sorted = Array.isArray(data)
+        ? data.slice().sort((a, b) => {
+            const ai = Number(a?.id ?? Number.MAX_SAFE_INTEGER);
+            const bi = Number(b?.id ?? Number.MAX_SAFE_INTEGER);
+            return ai - bi;
+          })
+        : [];
+      cachedClients = sorted; // Cache the sorted result
+      return sorted;
     } catch (error) {
       console.error("There was a problem with the fetch operation:", error);
       return [];
