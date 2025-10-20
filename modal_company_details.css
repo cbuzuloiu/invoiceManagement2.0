@@ -1,0 +1,229 @@
+/* modal window */
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center; /* vertical center */
+  justify-content: center; /* horizontal center */
+  background: rgba(0, 0, 0, 0.5); /* optional overlay */
+  z-index: 1000;
+  display: none;
+}
+
+.show {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center; /* vertical center */
+  justify-content: center; /* horizontal center */
+  background: rgba(0, 0, 0, 0.5); /* optional overlay */
+  z-index: 1000;
+}
+
+/* MODAL FOR ISSUER DETAILS */
+.modal-container {
+  /* display: none; */
+  /* position: fixed; */
+  /* top: 50px; */
+  /* left: 50px; */
+  /* height: 30rem; */
+  width: 70rem;
+  background: #f5f6fa;
+  border-radius: 1rem;
+  z-index: 1000;
+
+  padding: 3rem;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-container p {
+  font-size: 1.4rem;
+}
+
+.modal-container h2 {
+  font-size: 2rem;
+}
+
+.modal-title {
+  text-align: center;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 2rem;
+}
+.modal-content {
+  display: flex;
+  /* align-items: flex-start; */
+  /* justify-content: space-between; */
+  flex-direction: column;
+  padding: 1rem 0rem;
+}
+
+.modal-r {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* MODAL FOR RESPONSE MESSAGES */
+.modal-overlay-req {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center; /* vertical center */
+  justify-content: center; /* horizontal center */
+  background: rgba(0, 0, 0, 0.5); /* optional overlay */
+  z-index: 1000;
+  display: none;
+}
+
+.show-req {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center; /* vertical center */
+  justify-content: center; /* horizontal center */
+  background: rgba(0, 0, 0, 0.5); /* optional overlay */
+  z-index: 1000;
+}
+
+.modal-container-req {
+  width: 50rem;
+  background: #f5f6fa;
+  border-radius: 1rem;
+  z-index: 1000;
+
+  padding: 3rem;
+
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+}
+
+.modal-container-req-content {
+  padding-bottom: 2rem;
+  align-self: center;
+}
+
+/* Modal for Delete Issuer */
+.modal-overlay-delete {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center; /* vertical center */
+  justify-content: center; /* horizontal center */
+  background: rgba(0, 0, 0, 0.5); /* optional overlay */
+  z-index: 1000;
+  display: none;
+}
+
+.show-delete {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center; /* vertical center */
+  justify-content: center; /* horizontal center */
+  background: rgba(0, 0, 0, 0.5); /* optional overlay */
+  z-index: 1000;
+}
+
+.modal-container-delete {
+  width: 50rem;
+  background: #f5f6fa;
+  border-radius: 1rem;
+  z-index: 1000;
+
+  padding: 3rem;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.modal-container-delete-content {
+  padding-bottom: 2rem;
+  align-self: center;
+}
+
+#close_modal_delete {
+  display: flex;
+  gap: 2rem;
+}
+
+/* Modal for Edit Issuer */
+.modal-overlay-edit {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center; /* vertical center */
+  justify-content: center; /* horizontal center */
+  background: rgba(0, 0, 0, 0.5); /* optional overlay */
+  z-index: 1000;
+  display: none;
+}
+
+.modal-overlay-edit h2 {
+  align-self: center;
+  margin-bottom: 2rem;
+}
+
+.show-edit {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center; /* vertical center */
+  justify-content: center; /* horizontal center */
+  background: rgba(0, 0, 0, 0.5); /* optional overlay */
+  z-index: 1000;
+}
+
+.modal-container-edit {
+  width: 80rem;
+  background: #f5f6fa;
+  border-radius: 1rem;
+  z-index: 1000;
+
+  padding: 3rem;
+
+  display: flex;
+  flex-direction: column;
+}
+
+.edit-form-container {
+  display: flex;
+  gap: 2rem;
+}
+
+.edit-form-container-1,
+.edit-form-container-2 {
+  flex: 1;
+}
+
+.edit-modal-btn {
+  display: flex;
+  gap: 2rem;
+}

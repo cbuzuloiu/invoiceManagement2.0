@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invoice Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="issuers.css" />
+    <link rel="stylesheet" href="modal_company_details.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="dashboard">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <h2 class="logo">💼 Invoicer</h2>
+        <nav>
+          <a href="index.html">🏠 Dashboard</a>
+          <a href="invoices.html">📑 Invoices</a>
+          <a href="issuers.html" class="active">🏢 Issuers</a>
+          <a href="clients.html">👥 Clients</a>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <!-- Headert -->
+        <header class="topbar">
+          <h1>Issuers</h1>
+        </header>
+
+        <!-- Add Issuer Form -->
+        <div class="add-issuer-form">
+          <h2>Add New Issuer</h2>
+
+          <form action="" class="form">
+            <div class="form-group">
+              <label for="issuer-name">Name</label>
+              <input
+                type="text"
+                id="issuer-name"
+                placeholder="Company or Individual Name"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="issuer-taxid">Tax ID / CUI</label>
+              <input
+                type="text"
+                id="issuer-taxid"
+                placeholder="e.g. RO12345678"
+              />
+            </div>
+            <div class="form-group">
+              <label for="issuer-taxid-reg"
+                >Tax ID / Nr. Registrul Comertului</label
+              >
+              <input
+                type="text"
+                id="issuer-taxid-reg"
+                placeholder="e.g. YAAAAXXXXXXJJC"
+              />
+            </div>
+            <div class="form-group">
+              <label for="issuer-address">Address</label>
+              <input
+                id="issuer-address"
+                rows="2"
+                placeholder="Street, City, Country"
+              />
+            </div>
+            <div class="form-group">
+              <label for="issuer-bank-name">Bank Name</label>
+              <input
+                type="text"
+                id="issuer-bank-name"
+                placeholder="e.g. ING BANK Romania S.A."
+              />
+            </div>
+            <div class="form-group">
+              <label for="issuer-bank-account">Bank Account</label>
+              <input
+                type="text"
+                id="issuer-bank-account"
+                placeholder="e.g. RO66BACX0000001234567890"
+              />
+            </div>
+            <div class="form-group">
+              <label for="issuer-phone">Phone</label>
+              <input
+                type="tel"
+                id="issuer-phone"
+                placeholder="+40 712 345 678"
+              />
+            </div>
+            <div class="form-group">
+              <label for="issuer-email">Email</label>
+              <input
+                type="email"
+                id="issuer-email"
+                placeholder="Email Address"
+              />
+            </div>
+            <div class="form-group">
+              <label for="issuer-website">Website</label>
+              <input
+                type="text"
+                id="issuer-website"
+                placeholder="e.g. https://www.website.ro"
+              />
+            </div>
+            <button type="submit" id="add_issuer_btn" class="btn">
+              ➕ Add Issuer
+            </button>
+          </form>
+        </div>
+
+        <!-- Issuers Table -->
+        <div class="issuer-table">
+          <h2>All Issuers</h2>
+
+          <div class="table">
+            <div class="table-c">
+              <div class="table-r">
+                <p class="text-strong">Name</p>
+              </div>
+              <div class="table-r">
+                <p>ABC Solutions SRL</p>
+              </div>
+              <div class="table-r">
+                <p>ABC Solutions SRL</p>
+              </div>
+            </div>
+            <div class="table-c">
+              <div class="table-r">
+                <p class="text-strong">Email</p>
+              </div>
+              <div class="table-r">
+                <p>contact@abc.ro</p>
+              </div>
+              <div class="table-r">
+                <p>contact@abc.ro</p>
+              </div>
+            </div>
+            <div class="table-c">
+              <div class="table-r">
+                <p class="text-strong">Phone</p>
+              </div>
+              <div class="table-r">
+                <p>+40 721 123 456</p>
+              </div>
+              <div class="table-r">
+                <p>+40 721 123 456</p>
+              </div>
+            </div>
+            <div class="table-c">
+              <div class="table-r">
+                <p class="text-strong">Actions</p>
+              </div>
+              <div class="table-r">
+                <div class="table-actions">
+                  <button class="btn small issuer-detail">🔎 Details</button>
+                  <button class="btn small">✏️ Edit</button>
+                  <button class="btn small danger">🗑️ Delete</button>
+                </div>
+              </div>
+
+              <div class="table-r">
+                <div class="table-actions">
+                  <button class="btn small issuer-detail">🔎 Details</button>
+                  <button class="btn small">✏️ Edit</button>
+                  <button class="btn small danger">🗑️ Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Issuer modal window -->
+    <div class="modal-overlay">
+      <div class="modal-container">
+        <div class="modal-title">
+          <h2>ABC Solutions SRL</h2>
+        </div>
+
+        <div class="modal-content">
+          <div class="modal-r">
+            <p class="text-strong">Tax ID / CUI:</p>
+            <p>RO12345678</p>
+          </div>
+
+          <div class="modal-r">
+            <p class="text-strong">Tax ID / Nr. Registrul Comertului:</p>
+            <p>YAAAAXXXXXXJJC</p>
+          </div>
+
+          <div class="modal-r">
+            <p class="text-strong">Address:</p>
+            <p>Strada Victoriei nr. 45, Etaj 2, Sector 1, București, România</p>
+          </div>
+
+          <div class="modal-r">
+            <p class="text-strong">Bank Name:</p>
+            <p>ING BANK Romania S.A</p>
+          </div>
+
+          <div class="modal-r">
+            <p class="text-strong">Bank Account:</p>
+            <p>RO66BACX0000001234567890</p>
+          </div>
+          <div class="modal-r">
+            <p class="text-strong">Phone:</p>
+            <p>+40712345678</p>
+          </div>
+          <div class="modal-r">
+            <p class="text-strong">Email:</p>
+            <p>example@example.com</p>
+          </div>
+          <div class="modal-r">
+            <p class="text-strong">Website:</p>
+            <p>https://www.website.ro</p>
+          </div>
+        </div>
+
+        <nav>
+          <button id="close_modal" class="btn">✖️ Close</button>
+        </nav>
+      </div>
+    </div>
+
+    <script src="issuers.js"></script>
+  </body>
+</html>

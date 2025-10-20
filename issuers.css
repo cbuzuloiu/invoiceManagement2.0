@@ -1,0 +1,110 @@
+.main-content {
+  flex: 1;
+}
+
+.topbar {
+  padding: 2rem;
+  border-bottom: 1px solid #ddd;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.add-issuer-form,
+.issuer-table,
+.add-client-form,
+.client-table {
+  padding: 2rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem 0rem;
+}
+
+.form-group label {
+  font-size: 1.6rem;
+  margin-bottom: 0.3rem;
+}
+
+.form-group input {
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1.6rem;
+}
+
+.form-group input::placeholder {
+  color: #999; /* lighter gray */
+  opacity: 0.8; /* make it semi-transparent */
+}
+.btn {
+  display: block; /* ensures it behaves like a block element */
+  width: 100%; /* takes all available width from parent */
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1.6rem;
+  text-align: center; /* centers text horizontally */
+}
+
+.btn:hover {
+  background: #2980b9;
+}
+
+.btn:active {
+  background: #3498db;
+}
+
+.small {
+  width: 80px;
+  height: 30px;
+  padding: 4px 8px;
+  font-size: 1.2rem;
+  border: none;
+  border-radius: 4px;
+  background: #7f8c8d;
+  color: white;
+  cursor: pointer;
+  text-align: center;
+}
+.small:hover {
+  background: #636e72;
+}
+
+.btn.danger {
+  background: #d9534f;
+}
+.btn.danger:hover {
+  background: #c9302c;
+}
+
+.table {
+  display: flex;
+  justify-content: space-between;
+}
+
+.table-c {
+  flex-grow: 1;
+}
+
+.text-strong {
+  font-weight: 900;
+}
+
+.table-r {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-bottom: 1px solid #ddd;
+  height: 4.5rem;
+}
+
+.table-actions {
+  display: flex;
+  gap: 2rem;
+}
