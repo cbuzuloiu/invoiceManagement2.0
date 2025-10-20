@@ -379,6 +379,28 @@ export async function addCompanie(clientType) {
       ".modal-container-req-content"
     );
 
+    // non-intrusive client-side sanitization
+    const stripTags = (v) => String(v ?? "").replace(/<[^>]*>/g, "");
+    const trimCollapse = (v) => stripTags(v).replace(/\s+/g, " ").trim();
+    const trimOnly = (v) => stripTags(v).trim();
+    const removeSpaces = (v) => stripTags(v).replace(/\s+/g, "").trim();
+
+    const sanitized = {
+      // common
+      name: trimCollapse(data.name),
+      email: trimOnly(data.email)?.toLowerCase(),
+      phone: trimCollapse(data.phone),
+      address: trimCollapse(data.address),
+      // ids
+      cui: removeSpaces(data.cui)?.toUpperCase(),
+      nr_reg_com: trimOnly(data.nr_reg_com)?.toUpperCase(),
+      // banking
+      bank_name: trimCollapse(data.bank_name),
+      bank_account: removeSpaces(data.bank_account)?.toUpperCase(),
+      // web
+      website: trimOnly(data.website),
+    };
+
     // basic client-side validation without altering existing flow
     // - required fields check
     // - simple format checks for email, phone, website, numeric-only where reasonable
@@ -408,34 +430,34 @@ export async function addCompanie(clientType) {
 
     // Required fields common to issuer/client forms (best-effort based on project usage)
     // Name
-    if (isEmpty(data.name)) errors.push("Name is required.");
+    if (isEmpty(sanitized.name)) errors.push("Name is required.");
 
     // Email
-    if (isEmpty(data.email)) errors.push("Email is required.");
-    else if (!isEmail(data.email)) errors.push("Email format is invalid.");
+    if (isEmpty(sanitized.email)) errors.push("Email is required.");
+    else if (!isEmail(sanitized.email)) errors.push("Email format is invalid.");
 
     // Phone
-    if (isEmpty(data.phone)) errors.push("Phone is required.");
-    else if (!isPhone(data.phone)) errors.push("Phone format is invalid.");
+    if (isEmpty(sanitized.phone)) errors.push("Phone is required.");
+    else if (!isPhone(sanitized.phone)) errors.push("Phone format is invalid.");
 
     // Address
-    if (isEmpty(data.address)) errors.push("Address is required.");
+    if (isEmpty(sanitized.address)) errors.push("Address is required.");
 
     // CUI – allow digits and uppercase letters only
-    if (isEmpty(data.cui)) errors.push("CUI is required.");
-    else if (!isUpperAlnum(data.cui))
+    if (isEmpty(sanitized.cui)) errors.push("CUI is required.");
+    else if (!isUpperAlnum(sanitized.cui))
       errors.push("CUI must contain only digits and uppercase letters.");
 
     // Nr. Reg. Com – required (format may vary; just ensure not empty)
-    if (isEmpty(data.nr_reg_com))
+    if (isEmpty(sanitized.nr_reg_com))
       errors.push("Registration number is required.");
 
     // Bank name and account – required
-    if (isEmpty(data.bank_name)) errors.push("Bank name is required.");
-    if (isEmpty(data.bank_account)) errors.push("Bank account is required.");
+    if (isEmpty(sanitized.bank_name)) errors.push("Bank name is required.");
+    if (isEmpty(sanitized.bank_account)) errors.push("Bank account is required.");
 
     // Website – optional, but if present check URL shape
-    if (!isUrl(data.website)) errors.push("Website URL is invalid.");
+    if (!isUrl(sanitized.website)) errors.push("Website URL is invalid.");
 
     // If validation fails, surface errors in the existing request modal and stop
     if (errors.length > 0) {
@@ -454,7 +476,7 @@ export async function addCompanie(clientType) {
         response = await fetch("http://127.0.0.1:8000/addissuer", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
+          body: JSON.stringify(sanitized),
         });
 
         const result = await response.json();
@@ -476,7 +498,7 @@ export async function addCompanie(clientType) {
         response = await fetch("http://127.0.0.1:8000/addcleint", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(data),
+          body: JSON.stringify(sanitized),
         });
 
         const result = await response.json();
