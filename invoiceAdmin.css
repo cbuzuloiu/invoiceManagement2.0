@@ -1,0 +1,209 @@
+/*
+  Admin Invoices Page Styles (invoiceAdmin.css)
+  - Scope: styles specific to the admin invoice page only
+  - Strategy: inherit the project’s design language (fonts, buttons, colors)
+    and introduce minimal, scoped classes.
+  - Responsive: mobile-first with comfortable spacing and clear hierarchy.
+  - Modal: rely on existing .modal-overlay patterns; provide scoped fallbacks.
+*/
+
+:root {
+  /* Fallbacks if global variables are missing */
+  --admin-max-w: 1080px;
+  --panel-bg: var(--surface, #ffffff);
+  --panel-border: var(--border, #e5e7eb);
+  --panel-shadow: 0 1px 2px rgba(0,0,0,0.05), 0 6px 16px rgba(0,0,0,0.06);
+  --text: var(--text, #111827);
+  --muted: var(--muted, #6b7280);
+  --accent: var(--primary, #4f46e5);
+  --radius: 12px;
+  --radius-sm: 8px;
+  --s-1: .25rem;
+  --s-2: .5rem;
+  --s-3: .75rem;
+  --s-4: 1rem;
+  --s-5: 1.25rem;
+  --s-6: 1.5rem;
+  --s-8: 2rem;
+}
+
+.invoice-admin-container {
+  color: var(--text);
+  max-width: var(--admin-max-w);
+  margin: 0 auto;
+  padding: var(--s-6) var(--s-4);
+  display: grid;
+  gap: var(--s-6);
+}
+
+.invoice-card {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  box-shadow: var(--panel-shadow);
+  padding: var(--s-5);
+}
+
+.invoice-section-title {
+  margin: 0 0 var(--s-4);
+  font-size: 1.25rem;
+}
+
+/* Form */
+.invoice-form .form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-4);
+}
+
+.invoice-form .form-group label {
+  display: block;
+  margin-bottom: var(--s-2);
+  color: var(--muted);
+}
+
+.invoice-items-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--s-3);
+  margin-top: var(--s-4);
+}
+
+.invoice-items-table-wrapper {
+  overflow-x: auto;
+}
+
+table.invoice-items-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid var(--panel-border);
+}
+
+table.invoice-items-table th,
+table.invoice-items-table td {
+  padding: var(--s-3);
+  border-bottom: 1px solid var(--panel-border);
+}
+
+table.invoice-items-table thead th {
+  text-align: left;
+  color: var(--muted);
+}
+
+table.invoice-items-table td.num,
+table.invoice-items-table th.num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.invoice-form-summary {
+  display: grid;
+  gap: var(--s-2);
+  margin-top: var(--s-4);
+  justify-content: end;
+}
+
+.invoice-form-summary .row {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: var(--s-4);
+}
+
+.invoice-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--s-3);
+  margin-top: var(--s-4);
+}
+
+/* Listing using column containers with .table-r rows (compatible with existing patterns) */
+.invoice-table-columns {
+  display: grid;
+  grid-template-columns: 2fr 2fr 1.5fr 1.5fr 1.5fr 2fr;
+  gap: var(--s-3);
+}
+
+.invoice-table-columns > div {
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+.invoice-table-columns .table-r {
+  display: block;
+  padding: var(--s-3) var(--s-4);
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.invoice-table-columns .table-r:last-child {
+  border-bottom: none;
+}
+
+.invoice-table-columns .text-strong {
+  font-weight: 600;
+}
+
+.table-actions { display: flex; gap: var(--s-2); flex-wrap: wrap; }
+
+/* Summary panel */
+.summary-panel {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-3);
+}
+
+.summary-card {
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-sm);
+  padding: var(--s-4);
+}
+
+.summary-card .label { color: var(--muted); display: block; }
+.summary-card .value { font-weight: 700; font-size: 1.125rem; }
+
+/* Modal (scoped fallback) */
+.modal-overlay.invoice-modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+  display: none; /* toggle with .show */
+  align-items: center;
+  justify-content: center;
+  padding: var(--s-6);
+  z-index: 50;
+}
+
+.modal-overlay.invoice-modal.show { display: flex; }
+
+.invoice-modal .modal-container {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  box-shadow: var(--panel-shadow);
+  width: min(720px, 100%);
+  max-height: 90vh;
+  overflow: auto;
+  padding: var(--s-5);
+}
+
+.invoice-modal h2 { margin-top: 0; }
+
+.invoice-modal .modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--s-3);
+  margin-top: var(--s-4);
+}
+
+/* Responsive adjustments */
+@media (min-width: 900px) {
+  .invoice-form .form-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  .summary-panel {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invoice</title>
+    <!-- Inherit base styles and design system -->
+    <link rel="stylesheet" href="style.css" />
+    <!-- Page-specific styles -->
+    <link rel="stylesheet" href="invoice.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="dashboard">
+      <!-- Sidebar (kept for consistency with project) -->
+      <aside class="sidebar">
+        <h2 class="logo">Invoicer</h2>
+        <nav>
+          <a href="index.html">Dashboard</a>
+          <a href="invoices.html" class="active">Invoices</a>
+          <a href="issuers.html">Issuers</a>
+          <a href="clients.html">Clients</a>
+        </nav>
+      </aside>
+
+      <!-- Main content -->
+      <div class="main-content">
+        <header class="topbar">
+          <h1>Invoice</h1>
+        </header>
+
+        <div class="invoice-page">
+          <!-- Actions (print) -->
+          <div class="invoice-actions">
+            <button class="btn" onclick="window.print()">Print</button>
+          </div>
+
+          <!-- Header / Branding -->
+          <header class="invoice-card invoice-header" aria-label="Invoice Header">
+            <div class="invoice-brand">
+              <div class="brand">
+                <div class="brand-logo" aria-hidden="true">IN</div>
+                <div>
+                  <h2 class="brand-name">Your Company Name</h2>
+                  <p class="brand-sub">Street, City, Country</p>
+                </div>
+              </div>
+              <div>
+                <h2 class="invoice-title">Invoice</h2>
+              </div>
+            </div>
+          </header>
+
+          <!-- Invoice meta and client details -->
+          <section class="invoice-meta" aria-label="Invoice Information" style="margin-top: 1rem;">
+            <div class="meta-block">
+              <h3>Invoice Info</h3>
+              <ul class="meta-list">
+                <li class="meta-item"><span class="label">Invoice #</span><span>INV-00123</span></li>
+                <li class="meta-item"><span class="label">Date</span><span>2025-01-10</span></li>
+                <li class="meta-item"><span class="label">Due Date</span><span>2025-01-24</span></li>
+              </ul>
+            </div>
+            <div class="meta-block">
+              <h3>Bill To</h3>
+              <ul class="meta-list">
+                <li class="meta-item"><span class="label">Client</span><span>Client Company SRL</span></li>
+                <li class="meta-item"><span class="label">Contact</span><span>client@example.com</span></li>
+                <li class="meta-item"><span class="label">Address</span><span>Main Street 1, City</span></li>
+              </ul>
+            </div>
+          </section>
+
+          <!-- Items table -->
+          <section class="invoice-card" aria-label="Invoice Items" style="margin-top: 1rem;">
+            <div class="invoice-table-wrapper">
+              <table class="invoice-table">
+                <thead>
+                  <tr>
+                    <th scope="col">Description</th>
+                    <th scope="col" class="num">Qty</th>
+                    <th scope="col" class="num">Unit Price</th>
+                    <th scope="col" class="num">Total</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Service or Product A</td>
+                    <td class="num">2</td>
+                    <td class="num">150.00</td>
+                    <td class="num">300.00</td>
+                  </tr>
+                  <tr>
+                    <td>Service or Product B</td>
+                    <td class="num">1</td>
+                    <td class="num">200.00</td>
+                    <td class="num">200.00</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <!-- Summary -->
+          <section class="invoice-summary" aria-label="Invoice Summary" style="margin-top: 1rem;">
+            <div class="summary-row">
+              <span>Subtotal</span>
+              <span>500.00</span>
+            </div>
+            <div class="summary-row">
+              <span>Taxes (19%)</span>
+              <span>95.00</span>
+            </div>
+            <div class="summary-row total">
+              <span>Grand Total</span>
+              <span>595.00</span>
+            </div>
+          </section>
+
+          <!-- Footer -->
+          <footer class="invoice-card invoice-footer" aria-label="Invoice Footer" style="margin-top: 1rem;">
+            <p>Thank you for your business!</p>
+            <p>Contact: support@yourcompany.com | +40 712 345 678</p>
+          </footer>
+        </div>
+      </div>
+    </div>
+  </body>
+  </html>
+

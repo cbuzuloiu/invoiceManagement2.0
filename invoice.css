@@ -1,0 +1,254 @@
+/*
+  Invoice Page Styles (invoice.css)
+  - Purpose: Dedicated styles for the invoice page without changing existing files
+  - Approach: Use the existing design language by inheriting fonts, buttons, and colors.
+    Where possible, reference CSS variables with sensible fallbacks to keep consistency.
+  - Layout: Mobile-first, centered content with a max-width around 880px.
+  - Print: Provide print-friendly rules; hide non-essential UI, remove shadows, optimize spacing.
+*/
+
+:root {
+  /* Fallbacks in case project variables are not present */
+  --invoice-max-w: 880px;
+  --panel-bg: var(--surface, #ffffff);
+  --panel-border: var(--border, #e5e7eb);
+  --panel-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 4px 10px rgba(0, 0, 0, 0.06);
+  --text-color: var(--text, #111827);
+  --muted: var(--muted, #6b7280);
+  --accent: var(--primary, #4f46e5);
+  --accent-contrast: var(--on-primary, #ffffff);
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --radius: 12px;
+  --radius-sm: 8px;
+  --table-head-bg: var(--panel-muted, #f9fafb);
+}
+
+/* Page container for invoice content */
+.invoice-page {
+  color: var(--text-color);
+  max-width: var(--invoice-max-w);
+  margin: 0 auto;
+  padding: var(--space-6) var(--space-4);
+}
+
+/* Small actions row (e.g., Print button) */
+.invoice-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+.invoice-actions .btn {
+  /* Leverage existing .btn, add subtle hover only */
+  transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.invoice-actions .btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+/* Card-like containers */
+.invoice-card {
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  box-shadow: var(--panel-shadow);
+  padding: var(--space-5);
+}
+
+/* Header */
+.invoice-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.invoice-brand {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+}
+
+.invoice-brand .brand {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.invoice-brand .brand-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--accent-contrast);
+  display: grid;
+  place-items: center;
+  font-weight: 600;
+}
+
+.invoice-title {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.brand-name {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Meta sections */
+.invoice-meta {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-4);
+}
+
+.meta-block {
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius-sm);
+  padding: var(--space-4);
+  background: #fff;
+}
+
+.meta-block h3 {
+  margin: 0 0 var(--space-3);
+  font-size: 1rem;
+}
+
+.meta-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.meta-item {
+  display: flex;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.meta-item .label {
+  color: var(--muted);
+}
+
+/* Table */
+.invoice-table-wrapper {
+  overflow-x: auto;
+}
+
+table.invoice-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--panel-bg);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+}
+
+table.invoice-table thead th {
+  text-align: left;
+  background: var(--table-head-bg);
+  color: var(--muted);
+  font-weight: 600;
+}
+
+table.invoice-table th,
+table.invoice-table td {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--panel-border);
+}
+
+table.invoice-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+table.invoice-table td.num,
+table.invoice-table th.num {
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* Summary */
+.invoice-summary {
+  margin-left: auto;
+  width: min(420px, 100%);
+  border: 1px solid var(--panel-border);
+  border-radius: var(--radius);
+  background: var(--panel-bg);
+}
+
+.summary-row {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--panel-border);
+}
+
+.summary-row:last-child {
+  border-bottom: none;
+}
+
+.summary-row.total {
+  font-weight: 700;
+}
+
+/* Footer */
+.invoice-footer {
+  color: var(--muted);
+  text-align: center;
+}
+
+/* Responsive adjustments */
+@media (min-width: 720px) {
+  .invoice-header {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .invoice-meta {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+/* Print styles: focus on the invoice content, remove decoration */
+@media print {
+  body {
+    background: #fff !important;
+  }
+  .sidebar,
+  .topbar,
+  .invoice-actions,
+  nav,
+  .dashboard > aside {
+    display: none !important;
+  }
+  .invoice-page {
+    padding: 0;
+    margin: 0;
+    max-width: none;
+  }
+  .invoice-card,
+  .meta-block,
+  .invoice-summary,
+  table.invoice-table {
+    box-shadow: none !important;
+    border-color: #ddd !important;
+  }
+  table.invoice-table {
+    page-break-inside: auto;
+  }
+  tr { page-break-inside: avoid; page-break-after: auto; }
+  thead { display: table-header-group; }
+  tfoot { display: table-footer-group; }
+}
+

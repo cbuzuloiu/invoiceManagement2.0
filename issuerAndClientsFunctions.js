@@ -379,6 +379,74 @@ export async function addCompanie(clientType) {
       ".modal-container-req-content"
     );
 
+    // basic client-side validation without altering existing flow
+    // - required fields check
+    // - simple format checks for email, phone, website, numeric-only where reasonable
+    const errors = [];
+
+    // Helpers
+    const isEmpty = (v) => !v || String(v).trim().length === 0;
+    const isEmail = (v) =>
+      /^\s*[^\s@]+@[^\s@]+\.[^\s@]{2,}\s*$/.test(String(v || ""));
+    const isPhone = (v) =>
+      /^\s*[+]?([0-9][ \-()]*){6,}\s*$/.test(String(v || ""));
+    const isUrl = (v) => {
+      if (isEmpty(v)) return true; // optional if provided
+      try {
+        const u = new URL(
+          String(v).trim().startsWith("http")
+            ? String(v).trim()
+            : `https://${String(v).trim()}`
+        );
+        return Boolean(u.hostname);
+      } catch {
+        return false;
+      }
+    };
+    const isNumeric = (v) => /^\s*\d+\s*$/.test(String(v || ""));
+    const isUpperAlnum = (v) => /^\s*[A-Z0-9]+\s*$/.test(String(v || ""));
+
+    // Required fields common to issuer/client forms (best-effort based on project usage)
+    // Name
+    if (isEmpty(data.name)) errors.push("Name is required.");
+
+    // Email
+    if (isEmpty(data.email)) errors.push("Email is required.");
+    else if (!isEmail(data.email)) errors.push("Email format is invalid.");
+
+    // Phone
+    if (isEmpty(data.phone)) errors.push("Phone is required.");
+    else if (!isPhone(data.phone)) errors.push("Phone format is invalid.");
+
+    // Address
+    if (isEmpty(data.address)) errors.push("Address is required.");
+
+    // CUI – allow digits and uppercase letters only
+    if (isEmpty(data.cui)) errors.push("CUI is required.");
+    else if (!isUpperAlnum(data.cui))
+      errors.push("CUI must contain only digits and uppercase letters.");
+
+    // Nr. Reg. Com – required (format may vary; just ensure not empty)
+    if (isEmpty(data.nr_reg_com))
+      errors.push("Registration number is required.");
+
+    // Bank name and account – required
+    if (isEmpty(data.bank_name)) errors.push("Bank name is required.");
+    if (isEmpty(data.bank_account)) errors.push("Bank account is required.");
+
+    // Website – optional, but if present check URL shape
+    if (!isUrl(data.website)) errors.push("Website URL is invalid.");
+
+    // If validation fails, surface errors in the existing request modal and stop
+    if (errors.length > 0) {
+      addModalContent.innerHTML = errors.map((e) => `• ${e}`).join("<br>");
+      modalActive.classList.add("show-req");
+      closeModal.addEventListener("click", () => {
+        modalActive.classList.remove("show-req");
+      });
+      return; // do not proceed with the fetch
+    }
+
     try {
       let response;
 

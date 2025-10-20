@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invoices Admin</title>
+    <!-- Inherit base styles and design system -->
+    <link rel="stylesheet" href="style.css" />
+    <!-- Page-specific styles -->
+    <link rel="stylesheet" href="invoiceAdmin.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="dashboard">
+      <!-- Sidebar: preserved for app consistency -->
+      <aside class="sidebar">
+        <h2 class="logo">Invoicer</h2>
+        <nav>
+          <a href="index.html">Dashboard</a>
+          <a href="invoices.html" class="active">Invoices</a>
+          <a href="issuers.html">Issuers</a>
+          <a href="clients.html">Clients</a>
+        </nav>
+      </aside>
+
+      <!-- Main Content -->
+      <div class="main-content">
+        <header class="topbar">
+          <h1>Invoices Admin</h1>
+        </header>
+
+        <main class="invoice-admin-container">
+          <!-- Create Invoice Form -->
+          <section class="invoice-card invoice-form" aria-label="Create New Invoice">
+            <h2 class="invoice-section-title">Create New Invoice</h2>
+
+            <!-- invoice form submit handled by addInvoice() or equivalent existing JS -->
+            <form class="form" action="">
+              <div class="form-grid">
+                <!-- Client selector populated by existing JS (e.g., load clients) -->
+                <div class="form-group">
+                  <label for="invoice-client">Client</label>
+                  <select name="client_id" id="invoice-client">
+                    <option value="" selected disabled>Select a client</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label for="invoice-number">Invoice Number</label>
+                  <input type="text" id="invoice-number" name="number" placeholder="INV-00123" />
+                </div>
+
+                <div class="form-group">
+                  <label for="invoice-date">Date</label>
+                  <input type="date" id="invoice-date" name="date" />
+                </div>
+
+                <div class="form-group">
+                  <label for="invoice-due-date">Due Date</label>
+                  <input type="date" id="invoice-due-date" name="due_date" />
+                </div>
+              </div>
+
+              <div class="invoice-items-actions">
+                <h3 style="margin:0">Items</h3>
+                <!-- add-item handled by existing JS to append rows in tbody#invoice-items-body -->
+                <button class="btn small" type="button" id="add-item-btn">Add Item</button>
+              </div>
+
+              <div class="invoice-items-table-wrapper">
+                <table class="invoice-items-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">Description</th>
+                      <th scope="col" class="num">Qty</th>
+                      <th scope="col" class="num">Unit Price</th>
+                      <th scope="col" class="num">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody id="invoice-items-body"><!-- rows added dynamically by JS --></tbody>
+                </table>
+              </div>
+
+              <!-- Live form totals; values updated by existing JS -->
+              <div class="invoice-form-summary">
+                <div class="row"><span>Subtotal</span><strong id="form-subtotal">0.00</strong></div>
+                <div class="row"><span>Tax</span><strong id="form-tax">0.00</strong></div>
+                <div class="row"><span>Total</span><strong id="form-total">0.00</strong></div>
+              </div>
+
+              <div class="invoice-form-actions">
+                <!-- submit handled by addInvoice() or similar existing JS -->
+                <button type="submit" class="btn" id="add_invoice_btn">Save Invoice</button>
+              </div>
+            </form>
+          </section>
+
+          <!-- Existing Invoices Listing (column containers with .table-r rows) -->
+          <section class="invoice-card" aria-label="Invoices List">
+            <h2 class="invoice-section-title">Existing Invoices</h2>
+
+            <!--
+              Compatible with existing pattern used elsewhere:
+              Each column is its own container; rows are .table-r appended by JS.
+              JS should append matching .table-r into corresponding column containers using the same index.
+            -->
+            <div class="invoice-table-columns">
+              <div id="table-number"><div class="table-r"><p class="text-strong">Number</p></div></div>
+              <div id="table-client"><div class="table-r"><p class="text-strong">Client</p></div></div>
+              <div id="table-date"><div class="table-r"><p class="text-strong">Date</p></div></div>
+              <div id="table-due"><div class="table-r"><p class="text-strong">Due</p></div></div>
+              <div id="table-amount"><div class="table-r"><p class="text-strong">Amount</p></div></div>
+              <div id="table-actions">
+                <div class="table-r"><p class="text-strong">Actions</p></div>
+                <!-- Example (JS-generated):
+                <div class="table-r">
+                  <div class="table-actions">
+                    <button class="btn small invoice-detail">View Details</button>
+                    <button class="btn small">Edit</button>
+                    <button class="btn small danger">Delete</button>
+                  </div>
+                </div>
+                -->
+              </div>
+            </div>
+          </section>
+
+          <!-- Summary Panel / Quick Stats (populated by existing JS) -->
+          <section class="invoice-card summary-panel" aria-label="Invoices Summary">
+            <div class="summary-card">
+              <span class="label">Total Invoices</span>
+              <span class="value" id="invoices-count">0</span>
+            </div>
+            <div class="summary-card">
+              <span class="label">Outstanding Amount</span>
+              <span class="value" id="invoices-outstanding-amount">0.00</span>
+            </div>
+            <div class="summary-card">
+              <span class="label">Last Invoice Date</span>
+              <span class="value" id="invoices-last-date">—</span>
+            </div>
+          </section>
+        </main>
+
+        <!-- Invoice Details Modal (hidden by default) -->
+        <!-- shown via .modal-overlay.toggle('show') by existing JS -->
+        <div class="modal-overlay invoice-modal" aria-hidden="true">
+          <div class="modal-container">
+            <h2 id="modal-invoice-title">Invoice Details</h2>
+
+            <section class="modal-meta" aria-label="Invoice Meta">
+              <p><strong>Number:</strong> <span id="modal-invoice-number">—</span></p>
+              <p><strong>Client:</strong> <span id="modal-invoice-client">—</span></p>
+              <p><strong>Date:</strong> <span id="modal-invoice-date">—</span></p>
+              <p><strong>Due:</strong> <span id="modal-invoice-due">—</span></p>
+            </section>
+
+            <section class="modal-items" aria-label="Invoice Items">
+              <div class="invoice-items-table-wrapper">
+                <table class="invoice-items-table">
+                  <thead>
+                    <tr>
+                      <th>Description</th>
+                      <th class="num">Qty</th>
+                      <th class="num">Unit Price</th>
+                      <th class="num">Total</th>
+                    </tr>
+                  </thead>
+                  <tbody id="modal-invoice-items"><!-- populated by JS --></tbody>
+                </table>
+              </div>
+            </section>
+
+            <section class="modal-totals" aria-label="Totals">
+              <p><strong>Subtotal:</strong> <span id="modal-subtotal">0.00</span></p>
+              <p><strong>Tax:</strong> <span id="modal-tax">0.00</span></p>
+              <p><strong>Total:</strong> <span id="modal-total">0.00</span></p>
+            </section>
+
+            <div class="modal-actions">
+              <!-- consistent with existing close button id -->
+              <button class="btn" id="close_modal" type="button">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  </html>
+
