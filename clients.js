@@ -14,7 +14,7 @@ import {
   // LOGIC TO DISPLAY ISSUERS DETAIL IN THE DETAILS MODAL
   await loadIssuersDataToModal("client");
   // LOGIC TO ADD NEW ISSUER
-  //   await addIssuer();
+  await addIssuer("client");
   // LOGIC TO DELETE ISSUER
   //   await deleteIssuer();
   // LOGIC TO EDIT A ISSUER

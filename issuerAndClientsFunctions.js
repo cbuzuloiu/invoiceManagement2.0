@@ -242,7 +242,6 @@ function loadOneIssuerToTheUI(issuer) {
 }
 
 // LOAD ISSUER DATA TO THE MODAL WINDOW
-// de facut modificarile
 export async function loadIssuersDataToModal(clientType) {
   if (clientType === "issuer") {
     try {
@@ -346,7 +345,7 @@ export async function loadIssuersDataToModal(clientType) {
 }
 
 // ADD A NEW ISSUER
-export async function addIssuer() {
+export async function addIssuer(clientType) {
   const form = document.querySelector(".form");
 
   form.addEventListener("submit", async (e) => {
@@ -364,30 +363,54 @@ export async function addIssuer() {
     );
 
     try {
-      const response = await fetch("http://127.0.0.1:8000/addissuer", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+      let response;
 
-      const result = await response.json();
+      if (clientType === "issuer") {
+        response = await fetch("http://127.0.0.1:8000/addissuer", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
 
-      if (response.ok) {
-        // reload the page after successful request
-        // location.reload();
-        addModalContent.textContent =
-          "Company: " + result.issuer.name + " was addedd sucessfuly!";
+        const result = await response.json();
 
-        //LOAD TO THE UI THE ISSUER ADDED
-        cachedIssuers.push(result.issuer);
-        loadOneIssuerToTheUI(cachedIssuers.at(-1));
-        loadIssuersDataToModal();
+        if (response.ok) {
+          addModalContent.textContent =
+            "Company: " + result.issuer.name + " was addedd sucessfuly!";
 
-        form.reset(); // clears all inputs
-        // TO DO:
-        // ADD: Edit and Delete functionality
-      } else {
-        addModalContent.textContent = result.error;
+          //LOAD TO THE UI THE ISSUER ADDED
+          cachedIssuers.push(result.issuer);
+          loadOneIssuerToTheUI(cachedIssuers.at(-1));
+          loadIssuersDataToModal();
+
+          form.reset(); // clears all inputs
+        } else {
+          addModalContent.textContent = result.error;
+        }
+      } else if (clientType === "client") {
+        response = await fetch("http://127.0.0.1:8000/addcleint", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+          // reload the page after successful request
+          // location.reload();
+          addModalContent.textContent =
+            "Company: " + result.client.name + " was addedd sucessfuly!";
+
+          //LOAD TO THE UI THE ISSUER ADDED
+          cachedClients.push(result.client);
+          loadOneIssuerToTheUI(cachedClients.at(-1));
+          loadIssuersDataToModal();
+
+          form.reset(); // clears all inputs
+        } else {
+          addModalContent.textContent = result.error;
+        }
       }
     } catch (error) {
       console.log("Error", error);
@@ -495,6 +518,7 @@ export async function deleteIssuer() {
   });
 }
 
+// Edit Issuers
 export async function editIssuer() {
   document.addEventListener("click", async (e) => {
     const btn = e.target.closest(".issuer-edit");

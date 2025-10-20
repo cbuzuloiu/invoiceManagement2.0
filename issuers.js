@@ -14,7 +14,7 @@ import {
   await loadIssuersDataToModal("issuer");
 
   // LOGIC TO ADD NEW ISSUER
-  await addIssuer();
+  await addIssuer("issuer");
 
   // LOGIC TO DELETE ISSUER
   await deleteIssuer();
