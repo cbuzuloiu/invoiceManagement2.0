@@ -128,3 +128,47 @@
 .add-item-btn:active {
   transform: scale(0.97);
 }
+
+/* INVOICE SECTION  */
+
+.invoice-section {
+  width: 794px;
+  margin: 0 auto; /* center horizontally */
+  background: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* like a paper shadow */
+  padding-left: 2cm;
+  padding: 5rem 7.6rem;
+  /* padding: 5rem; */
+  /* border: 2cm solid #dcdcdc; */
+
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
+  gap: 2rem;
+}
+
+.invoice-detailes {
+  align-self: center;
+  text-align: center;
+}
+
+.companies-detailes {
+  display: flex;
+  justify-content: space-between;
+}
+
+.issuer-detailes,
+.client-detailes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* INVOICE TABLE */
+
+.invoice-table {
+  border: 1;
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+}
