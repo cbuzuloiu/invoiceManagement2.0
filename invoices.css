@@ -1,0 +1,72 @@
+.main-content {
+  flex: 1;
+}
+
+.topbar {
+  padding: 2rem;
+  border-bottom: 1px solid #ddd;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* CREATE NEW INVOICE SECTION */
+
+.create-new-invoice {
+  padding: 2rem;
+}
+
+.invoice-form {
+  padding-top: 2rem;
+}
+.form-data-section {
+  display: flex;
+  /* justify-content: space-between; */
+  gap: 3rem;
+}
+
+.form-data-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* button for add itme */
+.add-item-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #ffffff;
+  border: none;
+  color: #1976d2; /* Material blue */
+  font-size: 16px;
+  font-weight: 500;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+  transition: all 0.25s ease;
+}
+
+.plus-icon {
+  width: 22px;
+  height: 22px;
+  color: #1976d2;
+  transition: transform 0.25s ease, color 0.25s ease;
+}
+
+/* Hover effects */
+.add-item-btn:hover {
+  background-color: #1976d2;
+  color: white;
+  box-shadow: 0 4px 10px rgba(25, 118, 210, 0.4);
+}
+
+.add-item-btn:hover .plus-icon {
+  color: white;
+  transform: rotate(90deg);
+}
+
+/* Active click feedback */
+.add-item-btn:active {
+  transform: scale(0.97);
+}

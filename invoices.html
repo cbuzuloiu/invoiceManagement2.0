@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Invoice Dashboard</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="invoices.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -23,7 +24,70 @@
           <a href="clients.html">👥 Clients</a>
         </nav>
       </aside>
-      <div class="main-content"><p>dreapta</p></div>
+      <div class="main-content">
+        <!-- Headert -->
+        <header class="topbar">
+          <h1>Add New Invoice</h1>
+        </header>
+
+        <section class="create-new-invoice">
+          <div>
+            <h2>Create New Invoice</h2>
+            <form class="invoice-form" action=""></form>
+
+            <div class="form-data-section">
+              <div class="form-data-group">
+                <label for="invoice-issuer"><p>Issuer:</p></label>
+                <select name="issuer_id" id="invoice-issuer">
+                  <option value="">Select issuer</option>
+                </select>
+              </div>
+
+              <div class="form-data-group">
+                <label for="invoice-client"><p>Client:</p></label>
+                <select name="client_id" id="invoice-client">
+                  <option value="">Select client</option>
+                </select>
+              </div>
+
+              <div class="form-data-group">
+                <label for="invoice-date"><p>Date:</p></label>
+                <input type="date" id="invoice-date" name="date" />
+              </div>
+
+              <div class="form-data-group">
+                <label for="invoice-due-date"><p>Due Date:</p></label>
+                <input type="date" id="invoice-due-date" name="due-date" />
+              </div>
+
+              <div class="form-data-group">
+                <label for="invoice-lead-time"><p>Lead time:</p></label>
+                <input type="number" id="invoice-lead-time" name="lead-time" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section>
+          <button class="add-item-btn">
+            <svg
+              class="plus-icon"
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              viewBox="0 0 24 24"
+            >
+              <circle cx="12" cy="12" r="10" stroke-width="2" />
+              <line x1="12" y1="8" x2="12" y2="16" />
+              <line x1="8" y1="12" x2="16" y2="12" />
+            </svg>
+            Add Item
+          </button>
+        </section>
+      </div>
     </div>
   </body>
 </html>
