@@ -145,6 +145,8 @@
   flex-direction: column;
   /* align-items: center; */
   gap: 2rem;
+
+  margin-bottom: 2rem;
 }
 
 .invoice-detailes {
@@ -167,8 +169,45 @@
 /* INVOICE TABLE */
 
 .invoice-table {
-  border: 1;
   width: 100%;
   border-collapse: collapse;
-  text-align: center;
 }
+
+.invoice-table th,
+.invoice-table td {
+  font-size: 1.6rem;
+  padding: 0.8rem 1.2rem;
+  border: 1px solid #ddd;
+  color: #333;
+}
+
+.invoice-table th {
+  background: #f8f9fb;
+  color: #2c3e50;
+  font-weight: 600;
+  text-align: left;
+}
+
+.invoice-table td {
+  text-align: left;
+}
+
+/* Right-align numeric columns */
+/* .invoice-table td:nth-child(1),
+.invoice-table td:nth-child(3),
+.invoice-table td:nth-child(4),
+.invoice-table td:nth-child(5),
+.invoice-table td:nth-child(6),
+.invoice-table td:nth-child(7) {
+  text-align: right;
+} */
+
+/* Totals styling */
+/* .invoice-table tfoot td {
+  font-weight: 700;
+  background: #fafafa;
+} */
+
+/* .invoice-table tfoot tr:last-child td {
+  background: #f0f0f0;
+} */
