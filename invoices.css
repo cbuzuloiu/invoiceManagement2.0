@@ -30,6 +30,26 @@
   gap: 0.5rem;
 }
 
+/* ITEMS SECTION */
+
+.items-section {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid #ddd;
+}
+
+.items-section h2 {
+  padding-bottom: 2rem;
+}
+
+.items-section-item {
+  display: flex;
+  gap: 3rem;
+
+  /* padding-top: 2rem; */
+  padding-bottom: 2rem;
+}
+
 /* Invoice form fields */
 .form-data-group label {
   font-size: 1.6rem;
@@ -40,7 +60,10 @@
 #invoice-client,
 #invoice-date,
 #invoice-due-date,
-#invoice-lead-time {
+#invoice-lead-time,
+#invoice-item,
+#invoice-qt,
+#invoice-price {
   padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 6px;

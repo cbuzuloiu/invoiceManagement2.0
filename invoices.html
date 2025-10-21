@@ -65,27 +65,111 @@
                 <input type="number" id="invoice-lead-time" name="lead-time" />
               </div>
             </div>
-          </div>
-        </section>
 
-        <section>
-          <button class="add-item-btn">
-            <svg
-              class="plus-icon"
-              xmlns="http://www.w3.org/2000/svg"
-              width="20"
-              height="20"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              viewBox="0 0 24 24"
-            >
-              <circle cx="12" cy="12" r="10" stroke-width="2" />
-              <line x1="12" y1="8" x2="12" y2="16" />
-              <line x1="8" y1="12" x2="16" y2="12" />
-            </svg>
-            Add Item
-          </button>
+            <div class="items-section">
+              <h2>Add Items</h2>
+
+              <div class="items-section-item">
+                <div class="form-data-group">
+                  <label for="invoice-item"><p>Item Description:</p></label>
+                  <input
+                    type="text-area"
+                    id="invoice-item"
+                    name="invoice-item"
+                    placeholder="Add item description"
+                  />
+                </div>
+
+                <div class="form-data-group">
+                  <label for="invoice-qt"><p>Quantity:</p></label>
+                  <input
+                    type="number"
+                    id="invoice-qt"
+                    name="invoice-qt"
+                    placeholder="Add item quantity"
+                  />
+                </div>
+
+                <div class="form-data-group">
+                  <label for="invoice-price"><p>Price without VAT:</p></label>
+                  <input
+                    type="number"
+                    id="invoice-price"
+                    name="invoice-price"
+                    placeholder="Add price without VAT"
+                  />
+                </div>
+                <div class="form-data-group">
+                  <label for="invoice-vat"><p>VAT in %:</p></label>
+                  <input
+                    type="number"
+                    id="invoice-price"
+                    name="invoice-price"
+                    placeholder="Add VAT: ex. 21"
+                  />
+                </div>
+              </div>
+
+              <div class="items-section-item">
+                <div class="form-data-group">
+                  <label for="invoice-item"><p>Item Description:</p></label>
+                  <input
+                    type="text-area"
+                    id="invoice-item"
+                    name="invoice-item"
+                    placeholder="Add item description"
+                  />
+                </div>
+
+                <div class="form-data-group">
+                  <label for="invoice-qt"><p>Quantity:</p></label>
+                  <input
+                    type="number"
+                    id="invoice-qt"
+                    name="invoice-qt"
+                    placeholder="Add item quantity"
+                  />
+                </div>
+
+                <div class="form-data-group">
+                  <label for="invoice-price"><p>Price without VAT:</p></label>
+                  <input
+                    type="number"
+                    id="invoice-price"
+                    name="invoice-price"
+                    placeholder="Add price without VAT"
+                  />
+                </div>
+                <div class="form-data-group">
+                  <label for="invoice-vat"><p>VAT in %:</p></label>
+                  <input
+                    type="number"
+                    id="invoice-price"
+                    name="invoice-price"
+                    placeholder="Add VAT: ex. 21"
+                  />
+                </div>
+              </div>
+
+              <button class="add-item-btn">
+                <svg
+                  class="plus-icon"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  viewBox="0 0 24 24"
+                >
+                  <circle cx="12" cy="12" r="10" stroke-width="2" />
+                  <line x1="12" y1="8" x2="12" y2="16" />
+                  <line x1="8" y1="12" x2="16" y2="12" />
+                </svg>
+                Add New Item
+              </button>
+            </div>
+          </div>
         </section>
       </div>
     </div>
