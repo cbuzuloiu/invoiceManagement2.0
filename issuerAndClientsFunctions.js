@@ -468,7 +468,8 @@ export async function addCompanie(clientType) {
 
     // Bank name and account – required
     if (isEmpty(sanitized.bank_name)) errors.push("Bank name is required.");
-    if (isEmpty(sanitized.bank_account)) errors.push("Bank account is required.");
+    if (isEmpty(sanitized.bank_account))
+      errors.push("Bank account is required.");
 
     // Website – optional, but if present check URL shape
     if (!isUrl(sanitized.website)) errors.push("Website URL is invalid.");
