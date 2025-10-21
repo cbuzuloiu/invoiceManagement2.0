@@ -192,22 +192,34 @@
   text-align: left;
 }
 
-/* Right-align numeric columns */
-/* .invoice-table td:nth-child(1),
-.invoice-table td:nth-child(3),
-.invoice-table td:nth-child(4),
-.invoice-table td:nth-child(5),
-.invoice-table td:nth-child(6),
-.invoice-table td:nth-child(7) {
-  text-align: right;
-} */
+.invoice-actions {
+  padding: 2rem;
+}
 
-/* Totals styling */
-/* .invoice-table tfoot td {
-  font-weight: 700;
-  background: #fafafa;
-} */
+/* Print styles: print only the invoice sheet cleanly */
+@media print {
+  body {
+    background: #ffffff;
+  }
+  .sidebar,
+  .topbar,
+  .create-new-invoice,
+  .invoice-actions {
+    display: none !important;
+  }
+  .main-content {
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .invoice-section {
+    box-shadow: none;
+    width: auto;
+    margin: 0;
+    padding: 0;
+  }
+}
 
-/* .invoice-table tfoot tr:last-child td {
-  background: #f0f0f0;
-} */
+@page {
+  size: A4;
+  margin: 1cm;
+}
