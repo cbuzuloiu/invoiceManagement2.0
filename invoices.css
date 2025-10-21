@@ -83,12 +83,17 @@
   width: 8rem;
 }
 
+.invoice-nav {
+  display: flex;
+  gap: 2rem;
+}
+
 /* button for add itme */
 .add-item-btn {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background-color: #ffffff;
+  background-color: #e5e5e5;
   border: none;
   color: #1976d2; /* Material blue */
   font-size: 16px;
@@ -100,12 +105,12 @@
   transition: all 0.25s ease;
 }
 
-.plus-icon {
+/* .plus-icon {
   width: 22px;
   height: 22px;
   color: #1976d2;
   transition: transform 0.25s ease, color 0.25s ease;
-}
+} */
 
 /* Hover effects */
 .add-item-btn:hover {
