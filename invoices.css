@@ -30,6 +30,36 @@
   gap: 0.5rem;
 }
 
+/* Invoice form fields */
+.form-data-group label {
+  font-size: 1.6rem;
+  margin-bottom: 0.3rem;
+}
+
+#invoice-issuer,
+#invoice-client,
+#invoice-date,
+#invoice-due-date,
+#invoice-lead-time {
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1.6rem;
+  background: #ffffff;
+  color: #333;
+}
+
+/* Improve select sizing consistency */
+#invoice-issuer,
+#invoice-client {
+  min-width: 15rem;
+}
+
+/* Specific width for lead time input */
+#invoice-lead-time {
+  width: 8rem;
+}
+
 /* button for add itme */
 .add-item-btn {
   display: inline-flex;
