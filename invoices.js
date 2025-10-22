@@ -64,6 +64,39 @@ function selectCompany(companyType, companies) {
 //   console.log(valueIssuerID);
 // }
 
+function updateIssuerDetails(selectedIssuer) {
+  // 1️⃣ Select the container div
+  const detailsContainer = document.querySelector(".issuer-detailes");
+
+  if (!detailsContainer) {
+    console.error("Container .issuer-detailes not found!");
+    return;
+  }
+
+  // 2️⃣ Clear existing content
+  detailsContainer.innerHTML = "";
+
+  // 3️⃣ Define the fields to display
+  const fields = [
+    { label: "Furnizor", value: selectedIssuer.name },
+    { label: "CUI", value: selectedIssuer.cui },
+    { label: "Nr.Reg.Com", value: selectedIssuer.nr_reg_com },
+    { label: "Adresa", value: selectedIssuer.address },
+    { label: "Banca", value: selectedIssuer.bank_name },
+    { label: "Cont", value: selectedIssuer.bank_account },
+    { label: "Tel", value: selectedIssuer.phone },
+    { label: "Email", value: selectedIssuer.email },
+    { label: "Web Site", value: selectedIssuer.website },
+  ];
+
+  // 4️⃣ Create new <p> tags dynamically
+  fields.forEach(({ label, value }) => {
+    const p = document.createElement("p");
+    p.innerHTML = `<strong>${label}:</strong> <span>${value || "-"}</span>`;
+    detailsContainer.appendChild(p);
+  });
+}
+
 (async () => {
   // Import issuers and clients form database
   const issuers = await fetchCompanies("http://localhost:8000/allissuers");
@@ -97,30 +130,7 @@ function selectCompany(companyType, companies) {
 
     console.log(selectedIssuer);
 
-    const detailsContainer = document.querySelector(".issuer-detailes");
-
-    if (!detailsContainer) {
-      console.error("Container .issuer-detailes not found!");
-      return;
-    }
-
-    // Clear existing content
-    detailsContainer.innerHTML = "";
-
-    detailsContainer.insertAdjacentHTML(
-      "beforeend",
-      `
-        <p><strong>Furnizor:</strong> <span>${selectedIssuer.name}</span></p>
-        <p><strong>CUI:</strong> <span>${selectedIssuer.cui}</span></p>
-        <p><strong>Nr.Reg.Com:</strong> <span>${selectedIssuer.nr_reg_com}</span></p>
-        <p><strong>Adresa:</strong> <span>${selectedIssuer.address}</span></p>
-        <p><strong>Banca:</strong> <span>${selectedIssuer.bank_name}</span></p>
-        <p><strong>Cont:</strong> <span>${selectedIssuer.bank_accpimt}</span></p>
-        <p><strong>Tel:</strong> <span>${selectedIssuer.phone}</span></p>
-        <p><strong>Email:</strong> <span>${selectedIssuer.email}</span></p>
-        <p><strong>Web Site:</strong> <span>${selectedIssuer.website}</span></p>
-      `
-    );
+    updateIssuerDetails(selectedIssuer);
   });
 
   // Populate Client <select>
