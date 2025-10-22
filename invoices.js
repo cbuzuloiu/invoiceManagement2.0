@@ -42,6 +42,7 @@ function selectCompany(companyType, companies) {
 
     for (const companie of companies) {
       const option = document.createElement("option");
+      // value is the ID of the company (ID form DATABASE)
       option.value = String(companie?.id ?? "");
       option.textContent = String(companie?.name);
       select.appendChild(option);
@@ -51,7 +52,20 @@ function selectCompany(companyType, companies) {
   return select;
 }
 
+// function handleCompanySelect(compayID, companies) {
+//   const selectedCompanyId = Number(compayID);
+//   console.log(`The id of the issuer is: ${selectedCompanyId}`);
+
+//   const { select: selectIssuer, value: valueIssuerID } = selectCompany(
+//     "issuer",
+//     companies
+//   );
+//   console.log(selectIssuer);
+//   console.log(valueIssuerID);
+// }
+
 (async () => {
+  // Import issuers and clients form database
   const issuers = await fetchCompanies("http://localhost:8000/allissuers");
   const clients = await fetchCompanies("http://localhost:8000/allclients");
 
@@ -59,10 +73,75 @@ function selectCompany(companyType, companies) {
   console.log("Clients: ", clients);
 
   // Populate Issuer <select>
-  selectCompany("issuer", issuers);
+  // const { select: selectIssuer, value: valueIssuerID } = selectCompany(
+  //   "issuer",
+  //   issuers
+  // );
+  // console.log(selectIssuer);
+  // console.log(valueIssuerID);
+
+  // Populate Issuer <select>
+  const selectIssuer = selectCompany("issuer", issuers);
+  let selectedIssuer = null; // variable to store the selected issuer form the event listener
+  console.log(selectIssuer);
+  console.log(selectIssuer.value);
+
+  selectIssuer.addEventListener("change", () => {
+    console.log(selectIssuer.value);
+    const selectedIssuerId = Number(selectIssuer.value);
+    console.log(selectedIssuerId);
+
+    // search for issuer with id of selectedIssuerId
+    // variable has to be declared outside the event listener
+    selectedIssuer = issuers.find((issuer) => issuer.id === selectedIssuerId);
+
+    console.log(selectedIssuer);
+
+    const detailsContainer = document.querySelector(".issuer-detailes");
+
+    if (!detailsContainer) {
+      console.error("Container .issuer-detailes not found!");
+      return;
+    }
+
+    // Clear existing content
+    detailsContainer.innerHTML = "";
+
+    detailsContainer.insertAdjacentHTML(
+      "beforeend",
+      `
+        <p><strong>Furnizor:</strong> <span>${selectedIssuer.name}</span></p>
+        <p><strong>CUI:</strong> <span>${selectedIssuer.cui}</span></p>
+        <p><strong>Nr.Reg.Com:</strong> <span>${selectedIssuer.nr_reg_com}</span></p>
+        <p><strong>Adresa:</strong> <span>${selectedIssuer.address}</span></p>
+        <p><strong>Banca:</strong> <span>${selectedIssuer.bank_name}</span></p>
+        <p><strong>Cont:</strong> <span>${selectedIssuer.bank_accpimt}</span></p>
+        <p><strong>Tel:</strong> <span>${selectedIssuer.phone}</span></p>
+        <p><strong>Email:</strong> <span>${selectedIssuer.email}</span></p>
+        <p><strong>Web Site:</strong> <span>${selectedIssuer.website}</span></p>
+      `
+    );
+  });
 
   // Populate Client <select>
-  selectCompany("client", clients);
+  // const { select: selectClient, value: valueClientID } = selectCompany(
+  //   "client",
+  //   clients
+  // );
+  // console.log(selectClient);
+  // console.log(valueClientID);
+
+  // selectIssuer.addEventListener("change", () => {
+  //   const { select: selectIssuer, value: valueIssuerID } = selectCompany(
+  //     "issuer",
+  //     issuers
+  //   );
+  //   console.log(valueIssuerID);
+  //   const selectedCompanyId = Number(valueIssuerID);
+  //   console.log(selectedCompanyId);
+  // });
+
+  // -----
 
   // select.addEventListener("change", () => {
   //   // console.log(`The id of the issuer is: ${issuerSelect.value}`);
