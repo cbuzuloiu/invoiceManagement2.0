@@ -52,20 +52,8 @@ function selectCompany(companyType, companies) {
   return select;
 }
 
-// function handleCompanySelect(compayID, companies) {
-//   const selectedCompanyId = Number(compayID);
-//   console.log(`The id of the issuer is: ${selectedCompanyId}`);
-
-//   const { select: selectIssuer, value: valueIssuerID } = selectCompany(
-//     "issuer",
-//     companies
-//   );
-//   console.log(selectIssuer);
-//   console.log(valueIssuerID);
-// }
-
 function updateIssuerDetails(selectedIssuer) {
-  // 1️⃣ Select the container div
+  // Select the container div
   const detailsContainer = document.querySelector(".issuer-detailes");
 
   if (!detailsContainer) {
@@ -73,10 +61,10 @@ function updateIssuerDetails(selectedIssuer) {
     return;
   }
 
-  // 2️⃣ Clear existing content
+  // Clear existing content
   detailsContainer.innerHTML = "";
 
-  // 3️⃣ Define the fields to display
+  // Define the fields to display
   const fields = [
     { label: "Furnizor", value: selectedIssuer.name },
     { label: "CUI", value: selectedIssuer.cui },
@@ -89,7 +77,7 @@ function updateIssuerDetails(selectedIssuer) {
     { label: "Web Site", value: selectedIssuer.website },
   ];
 
-  // 4️⃣ Create new <p> tags dynamically
+  // Create new <p> tags dynamically
   fields.forEach(({ label, value }) => {
     const p = document.createElement("p");
     p.innerHTML = `<strong>${label}:</strong> <span>${value || "-"}</span>`;
@@ -104,14 +92,6 @@ function updateIssuerDetails(selectedIssuer) {
 
   console.log("Issuer: ", issuers);
   console.log("Clients: ", clients);
-
-  // Populate Issuer <select>
-  // const { select: selectIssuer, value: valueIssuerID } = selectCompany(
-  //   "issuer",
-  //   issuers
-  // );
-  // console.log(selectIssuer);
-  // console.log(valueIssuerID);
 
   // Populate Issuer <select>
   const selectIssuer = selectCompany("issuer", issuers);
@@ -132,68 +112,4 @@ function updateIssuerDetails(selectedIssuer) {
 
     updateIssuerDetails(selectedIssuer);
   });
-
-  // Populate Client <select>
-  // const { select: selectClient, value: valueClientID } = selectCompany(
-  //   "client",
-  //   clients
-  // );
-  // console.log(selectClient);
-  // console.log(valueClientID);
-
-  // selectIssuer.addEventListener("change", () => {
-  //   const { select: selectIssuer, value: valueIssuerID } = selectCompany(
-  //     "issuer",
-  //     issuers
-  //   );
-  //   console.log(valueIssuerID);
-  //   const selectedCompanyId = Number(valueIssuerID);
-  //   console.log(selectedCompanyId);
-  // });
-
-  // -----
-
-  // select.addEventListener("change", () => {
-  //   // console.log(`The id of the issuer is: ${issuerSelect.value}`);
-  //   const selectedCompanyId = Number(select.value);
-  //   console.log(`The id of the issuer is: ${selectedCompanyId}`);
-  //   console.log(typeof selectedCompanyId);
-
-  //   // search for issuer with id of selectedIssuerId
-  //   const selectedIssuer = issuers.find(
-  //     (issuer) => issuer.id === selectedCompanyId
-  //   );
-
-  //   console.log(selectedIssuer);
-  // });
-
-  // -------
-  // const select = document.getElementById("invoice-issuer");
-  // if (select && Array.isArray(issuers)) {
-  //   // Remove any previously injected options but keep the placeholder (value="")
-  //   Array.from(select.querySelectorAll("option"))
-  //     .filter((opt) => opt.value !== "")
-  //     .forEach((opt) => opt.remove());
-
-  //   for (const issuer of issuers) {
-  //     const option = document.createElement("option");
-  //     option.value = String(issuer?.id ?? "");
-  //     option.textContent = String(issuer?.name);
-  //     select.appendChild(option);
-  //   }
-  // }
-
-  // select.addEventListener("change", () => {
-  //   // console.log(`The id of the issuer is: ${issuerSelect.value}`);
-  //   const selectedIssuerId = Number(select.value);
-  //   console.log(`The id of the issuer is: ${selectedIssuerId}`);
-  //   console.log(typeof selectedIssuerId);
-
-  //   // search for issuer with id of selectedIssuerId
-  //   const selectedIssuer = issuers.find(
-  //     (issuer) => issuer.id === selectedIssuerId
-  //   );
-
-  //   console.log(selectedIssuer);
-  // });
 })();
