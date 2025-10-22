@@ -47,6 +47,8 @@ function selectCompany(companyType, companies) {
       select.appendChild(option);
     }
   }
+
+  return select;
 }
 
 (async () => {
