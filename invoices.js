@@ -122,4 +122,19 @@ function updateCompanieDetails(companieType, selectedCompanie) {
 
     updateCompanieDetails("issuer", selectedIssuer);
   });
+
+  // Populate Client <select>
+  const selectClient = selectCompany("client", clients);
+  let selectedClient = null; // variable to store the selected client form the event listener
+
+  selectClient.addEventListener("change", () => {
+    const selectedClientId = Number(selectClient.value);
+
+    // search for client with id of selectedClientId
+    // variable has to be declared outside the event listener
+    selectedClient = clients.find((client) => client.id === selectedClientId);
+
+    console.log("Selected Client is: ", selectedClient);
+    updateCompanieDetails("client", selectedClient);
+  });
 })();
