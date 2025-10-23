@@ -52,13 +52,27 @@ function selectCompany(companyType, companies) {
   return select;
 }
 
-function updateIssuerDetails(selectedIssuer) {
-  // Select the container div
-  const detailsContainer = document.querySelector(".issuer-detailes");
+function updateCompanieDetails(companieType, selectedCompanie) {
+  let detailsContainer = null;
 
-  if (!detailsContainer) {
-    console.error("Container .issuer-detailes not found!");
-    return;
+  if (companieType === "issuer") {
+    detailsContainer = document.querySelector(".issuer-detailes");
+
+    if (!detailsContainer) {
+      console.error("Container .issuer-detailes not found!");
+      return;
+    }
+  }
+
+  if (companieType === "client") {
+    if (companieType === "client") {
+      detailsContainer = document.querySelector(".client-detailes");
+
+      if (!detailsContainer) {
+        console.error("Container .client-detailes not found!");
+        return;
+      }
+    }
   }
 
   // Clear existing content
@@ -66,15 +80,15 @@ function updateIssuerDetails(selectedIssuer) {
 
   // Define the fields to display
   const fields = [
-    { label: "Furnizor", value: selectedIssuer.name },
-    { label: "CUI", value: selectedIssuer.cui },
-    { label: "Nr.Reg.Com", value: selectedIssuer.nr_reg_com },
-    { label: "Adresa", value: selectedIssuer.address },
-    { label: "Banca", value: selectedIssuer.bank_name },
-    { label: "Cont", value: selectedIssuer.bank_account },
-    { label: "Tel", value: selectedIssuer.phone },
-    { label: "Email", value: selectedIssuer.email },
-    { label: "Web Site", value: selectedIssuer.website },
+    { label: "Furnizor", value: selectedCompanie.name },
+    { label: "CUI", value: selectedCompanie.cui },
+    { label: "Nr.Reg.Com", value: selectedCompanie.nr_reg_com },
+    { label: "Adresa", value: selectedCompanie.address },
+    { label: "Banca", value: selectedCompanie.bank_name },
+    { label: "Cont", value: selectedCompanie.bank_account },
+    { label: "Tel", value: selectedCompanie.phone },
+    { label: "Email", value: selectedCompanie.email },
+    { label: "Web Site", value: selectedCompanie.website },
   ];
 
   // Create new <p> tags dynamically
@@ -96,20 +110,16 @@ function updateIssuerDetails(selectedIssuer) {
   // Populate Issuer <select>
   const selectIssuer = selectCompany("issuer", issuers);
   let selectedIssuer = null; // variable to store the selected issuer form the event listener
-  console.log(selectIssuer);
-  console.log(selectIssuer.value);
 
   selectIssuer.addEventListener("change", () => {
-    console.log(selectIssuer.value);
     const selectedIssuerId = Number(selectIssuer.value);
-    console.log(selectedIssuerId);
 
     // search for issuer with id of selectedIssuerId
     // variable has to be declared outside the event listener
     selectedIssuer = issuers.find((issuer) => issuer.id === selectedIssuerId);
 
-    console.log(selectedIssuer);
+    console.log("Selected Issuer is: ", selectedIssuer);
 
-    updateIssuerDetails(selectedIssuer);
+    updateCompanieDetails("issuer", selectedIssuer);
   });
 })();
