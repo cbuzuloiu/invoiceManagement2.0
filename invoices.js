@@ -137,4 +137,35 @@ function updateCompanieDetails(companieType, selectedCompanie) {
     console.log("Selected Client is: ", selectedClient);
     updateCompanieDetails("client", selectedClient);
   });
+
+  // Populate Date
+  const selectDate = document.querySelector("#invoice-date");
+  let selectedDate = null;
+
+  selectDate.addEventListener("change", () => {
+    const rawDate = selectDate.value; // e.g. "2025-10-22"
+
+    selectedDate = new Date(rawDate);
+
+    // Format using browser locale
+    const formattedDate = selectedDate.toLocaleDateString(
+      navigator.language, // automatically uses the browser's locale
+      {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      }
+    );
+
+    const dateContainer = document.querySelector(".date");
+    // Clear old content (so we don’t keep appending)
+    dateContainer.innerHTML = "";
+
+    dateContainer.insertAdjacentHTML(
+      "beforeend",
+      `
+      <h2 class="date">Data: <span>${formattedDate}</span></h2>
+      `
+    );
+  });
 })();
