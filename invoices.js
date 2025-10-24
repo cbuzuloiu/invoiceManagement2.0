@@ -261,4 +261,95 @@ function updateLeadTime(selectDate, selectDueDate) {
     `;
     }
   });
+
+  // ADD ITEMS SECTION
+
+  const selectItemsSections = document.querySelectorAll(".items-section-item");
+  console.log(selectItemsSections);
+  // selectItemsSections.forEach((section) => {
+  //   const children = section.children;
+  //   console.log(children);
+  // });
+
+  // const invoiceItems = {};
+
+  class invoiceItem {
+    constructor(id, itemDescription = "", quantity = "", price = "", vat = "") {
+      this.id = id;
+      this.itemDescription = itemDescription;
+      this.quantity = quantity;
+      this.price = price;
+      this.vat = vat;
+    }
+  }
+
+  // This array will hold all the objects
+  const invoiceItems = [];
+
+  const bodyDataContainer = document.querySelector(".body-data");
+  console.log(bodyDataContainer);
+
+  // Loop through each .items-section-item element
+  selectItemsSections.forEach((section, index) => {
+    // Create a new empty invoiceItem object for each section
+    const item = new invoiceItem(index + 1);
+    invoiceItems.push(item);
+
+    bodyDataContainer.insertAdjacentHTML(
+      "beforeend",
+      `
+        <tr class = "item-${index + 1}">
+          <td class = "item-${index + 1}-id">${item.id}</td>
+          <td class = "item-${index + 1}-itemDescription">${
+        item.itemDescription
+      }</td>
+          <td class = "item-${index + 1}-price">${item.price}</td>
+          <td class = "item-${index + 1}-quantity">${item.quantity}</td>
+          <td class = "item-${index + 1}-quantity">${
+        item.price * item.quantity
+      }</td>
+          <td class = "item-${index + 1}-vat">${item.vat}</td>
+          <td class = "item-${index + 1}-vat">${item.vat}</td>
+        </tr>
+      `
+    );
+  });
+
+  console.log("Initial invoice items:", invoiceItems);
+
+  // INVOICE ITEM
+  const selectInvoiceItem = document.querySelector("#invoice-item");
+  console.log(selectInvoiceItem);
+
+  selectInvoiceItem.addEventListener("change", () => {
+    const selectedValue = selectInvoiceItem.value;
+    const selectItemContainer = document.querySelector(
+      ".item-1-itemDescription"
+    );
+    console.log(selectItemContainer);
+    console.log("Selected item:", selectedValue);
+
+    // Assume for now you want to populate the FIRST invoice item
+    // Later we’ll map this dynamically (based on which section is active)
+    invoiceItems[0].itemDescription = selectedValue;
+
+    console.log("Updated invoice items:", invoiceItems);
+
+    selectItemContainer.textContent = selectedValue;
+
+    // bodyDataContainer.insertAdjacentHTML(
+    //   "beforeend",
+    //   `
+    //     <tr>
+    //       <td>${invoiceItems[0].id}</td>
+    //       <td>${invoiceItems[0].itemDescription}</td>
+    //       <td>${invoiceItems[0].price}</td>
+    //       <td>${invoiceItems[0].quantity}</td>
+    //       <td>${invoiceItems[0].price * invoiceItems[0].quantity}</td>
+    //       <td>${invoiceItems[0].vat}</td>
+    //       <td>${invoiceItems[0].vat}</td>
+    //     </tr>
+    //   `
+    // );
+  });
 })();
