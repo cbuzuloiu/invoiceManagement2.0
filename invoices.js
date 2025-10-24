@@ -144,6 +144,18 @@ function priceValueUpdate(invoiceItems) {
   }
 }
 
+// VAT VALUE
+function vatValueUpdate(itemValue, invoiceItems) {
+  const selectItemContainerVatPrice = document.querySelector(".item-1-vat");
+  console.log(itemValue);
+
+  const vatValuePrice = Number(itemValue) * (Number(invoiceItems[0].vat) / 100);
+
+  if (!Number.isNaN(vatValuePrice)) {
+    selectItemContainerVatPrice.textContent = vatValuePrice;
+  }
+}
+
 (async () => {
   // Import issuers and clients form database
   const issuers = await fetchCompanies("http://localhost:8000/allissuers");
@@ -356,6 +368,8 @@ function priceValueUpdate(invoiceItems) {
     selectItemContainer.textContent = selectedValue;
   });
 
+  let itemValue = 0; // must be declared before quantity, price and vat event listeners
+
   // QUANTITY
   selectItemQt.addEventListener("change", () => {
     const selectedItemQt = selectItemQt.value;
@@ -363,7 +377,9 @@ function priceValueUpdate(invoiceItems) {
 
     invoiceItems[0].quantity = selectedItemQt;
     selectItemContainer.textContent = selectedItemQt;
-    const itemValue = priceValueUpdate(invoiceItems);
+
+    itemValue = priceValueUpdate(invoiceItems);
+    vatValueUpdate(itemValue, invoiceItems);
     console.log(itemValue);
   });
 
@@ -375,17 +391,19 @@ function priceValueUpdate(invoiceItems) {
     invoiceItems[0].price = selectedItemPrice;
     selectItemContainer.textContent = selectedItemPrice;
 
-    const itemValue = priceValueUpdate(invoiceItems);
+    itemValue = priceValueUpdate(invoiceItems);
+    vatValueUpdate(itemValue, invoiceItems);
     console.log(itemValue);
   });
 
   // VAT
-  console.log(selectItemVat);
   selectItemVat.addEventListener("change", () => {
     const selectedItemVat = selectItemVat.value;
     const selectItemContainer = document.querySelector(".item-1-vat-prq");
 
     invoiceItems[0].vat = selectedItemVat;
     selectItemContainer.textContent = selectedItemVat;
+
+    vatValueUpdate(itemValue, invoiceItems);
   });
 })();
