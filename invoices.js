@@ -317,7 +317,7 @@ function updateLeadTime(selectDate, selectDueDate) {
 
   console.log("Initial invoice items:", invoiceItems);
 
-  // INVOICE ITEM
+  // INVOICE ITEM AND DESCRIPTION DESCRIPTION
   const selectInvoiceItem = document.querySelector("#invoice-item");
   console.log(selectInvoiceItem);
 
