@@ -63,7 +63,8 @@
 #invoice-lead-time,
 #invoice-item,
 #invoice-qt,
-#invoice-price {
+#invoice-price,
+#invoice-vat {
   padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 6px;

@@ -334,6 +334,7 @@ function priceValueUpdate() {
   const selectInvoiceItem = document.querySelector("#invoice-item");
   const selectItemQt = document.querySelector("#invoice-qt");
   const selectItemPrice = document.querySelector("#invoice-price");
+  const selectItemVat = document.querySelector("#invoice-vat");
 
   // INVOICE ITEM AND DESCRIPTION ADDED
   selectInvoiceItem.addEventListener("change", () => {
@@ -372,5 +373,15 @@ function priceValueUpdate() {
     selectItemContainer.textContent = selectedItemPrice;
 
     priceValueUpdate();
+  });
+
+  // VAT
+  console.log(selectItemVat);
+  selectItemVat.addEventListener("change", () => {
+    const selectedItemVat = selectItemVat.value;
+    const selectItemContainer = document.querySelector(".item-1-vat-prq");
+
+    invoiceItems[0].vat = selectedItemVat;
+    selectItemContainer.textContent = selectedItemVat;
   });
 })();
