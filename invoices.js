@@ -266,12 +266,6 @@ function updateLeadTime(selectDate, selectDueDate) {
 
   const selectItemsSections = document.querySelectorAll(".items-section-item");
   console.log(selectItemsSections);
-  // selectItemsSections.forEach((section) => {
-  //   const children = section.children;
-  //   console.log(children);
-  // });
-
-  // const invoiceItems = {};
 
   class invoiceItem {
     constructor(id, itemDescription = "", quantity = "", price = "", vat = "") {
@@ -303,13 +297,13 @@ function updateLeadTime(selectDate, selectDueDate) {
           <td class = "item-${index + 1}-itemDescription">${
         item.itemDescription
       }</td>
-          <td class = "item-${index + 1}-price">${item.price}</td>
           <td class = "item-${index + 1}-quantity">${item.quantity}</td>
-          <td class = "item-${index + 1}-quantity">${
+          <td class = "item-${index + 1}-price">${item.price}</td>
+          <td class = "item-${index + 1}-price-total">${
         item.price * item.quantity
       }</td>
           <td class = "item-${index + 1}-vat">${item.vat}</td>
-          <td class = "item-${index + 1}-vat">${item.vat}</td>
+          <td class = "item-${index + 1}-vat-prq">${item.vat}%</td>
         </tr>
       `
     );
@@ -317,10 +311,13 @@ function updateLeadTime(selectDate, selectDueDate) {
 
   console.log("Initial invoice items:", invoiceItems);
 
-  // INVOICE ITEM AND DESCRIPTION DESCRIPTION
+  // ADDING ITEMS LOGIC
   const selectInvoiceItem = document.querySelector("#invoice-item");
+  const selectItemQt = document.querySelector("#invoice-qt");
   console.log(selectInvoiceItem);
+  console.log(selectItemQt);
 
+  // INVOICE ITEM AND DESCRIPTION ADDED
   selectInvoiceItem.addEventListener("change", () => {
     const selectedValue = selectInvoiceItem.value;
     const selectItemContainer = document.querySelector(
@@ -336,20 +333,15 @@ function updateLeadTime(selectDate, selectDueDate) {
     console.log("Updated invoice items:", invoiceItems);
 
     selectItemContainer.textContent = selectedValue;
+  });
 
-    // bodyDataContainer.insertAdjacentHTML(
-    //   "beforeend",
-    //   `
-    //     <tr>
-    //       <td>${invoiceItems[0].id}</td>
-    //       <td>${invoiceItems[0].itemDescription}</td>
-    //       <td>${invoiceItems[0].price}</td>
-    //       <td>${invoiceItems[0].quantity}</td>
-    //       <td>${invoiceItems[0].price * invoiceItems[0].quantity}</td>
-    //       <td>${invoiceItems[0].vat}</td>
-    //       <td>${invoiceItems[0].vat}</td>
-    //     </tr>
-    //   `
-    // );
+  // QUANTITY
+  selectItemQt.addEventListener("change", () => {
+    const selectedItemQt = selectItemQt.value;
+    const selectItemContainer = document.querySelector(".item-1-quantity");
+    console.log(selectItemContainer);
+
+    invoiceItems[0].quantity = selectedItemQt;
+    selectItemContainer.textContent = selectedItemQt;
   });
 })();
