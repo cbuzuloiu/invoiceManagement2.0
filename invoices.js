@@ -145,17 +145,16 @@ function updateCompanieDetails(companieType, selectedCompanie) {
   selectDate.addEventListener("change", () => {
     const rawDate = selectDate.value; // e.g. "2025-10-22"
 
-    selectedDate = new Date(rawDate);
+    // selectedDate = new Date(rawDate);
 
-    // Format using browser locale
-    const formattedDate = selectedDate.toLocaleDateString(
-      navigator.language, // automatically uses the browser's locale
-      {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      }
-    );
+    // Format using Romanian locale: DD.MM.YYYY
+    const formattedDate = new Date(rawDate).toLocaleDateString("ro-RO", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+
+    selectedDate = formattedDate;
 
     const dateContainer = document.querySelector(".date");
     // Clear old content (so we don’t keep appending)
@@ -164,7 +163,7 @@ function updateCompanieDetails(companieType, selectedCompanie) {
     dateContainer.insertAdjacentHTML(
       "beforeend",
       `
-      <h2 class="date">Data: <span>${formattedDate}</span></h2>
+      <h2 class="date">Data: <span>${selectedDate}</span></h2>
       `
     );
   });
