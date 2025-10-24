@@ -99,6 +99,29 @@ function updateCompanieDetails(companieType, selectedCompanie) {
   });
 }
 
+function updateLeadTime(selectDate, selectDueDate) {
+  const rawDate = selectDate.value;
+  const rawDueDate = selectDueDate.value;
+
+  console.log(rawDate);
+  console.log(rawDueDate);
+
+  const leadTimeInput = document.querySelector("#invoice-lead-time");
+
+  // Only proceed if both fields are filled
+  if (rawDate && rawDueDate) {
+    const date1 = new Date(rawDate);
+    const date2 = new Date(rawDueDate);
+
+    const diffMs = date2 - date1; // milliseconds difference
+    const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24)); // convert to days
+    console.log(diffDays);
+
+    // Display in the lead time field
+    leadTimeInput.value = diffDays >= 0 ? diffDays : 0; // avoid negative numbers
+  }
+}
+
 (async () => {
   // Import issuers and clients form database
   const issuers = await fetchCompanies("http://localhost:8000/allissuers");
@@ -166,6 +189,8 @@ function updateCompanieDetails(companieType, selectedCompanie) {
       <h2 class="date">Data: <span>${selectedDate}</span></h2>
       `
     );
+
+    updateLeadTime(selectDate, selectDueDate);
   });
 
   // Populate DueDate
@@ -196,5 +221,7 @@ function updateCompanieDetails(companieType, selectedCompanie) {
       <h2 class="date">Data scadenta: <span>${selectedDueDate}</span></h2>
       `
     );
+
+    updateLeadTime(selectDate, selectDueDate);
   });
 })();
