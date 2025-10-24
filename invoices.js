@@ -123,6 +123,25 @@ function updateLeadTime(selectDate, selectDueDate) {
   }
 }
 
+// PRICE VALUE
+function priceValueUpdate() {
+  const selectItemContainerPriceValue = document.querySelector(
+    ".item-1-price-value"
+  );
+
+  if (invoiceItems[0].quantity !== "" && invoiceItems[0].price !== "") {
+    console.log(invoiceItems[0].quantity);
+    console.log(invoiceItems[0].price);
+
+    const itemValue =
+      Number(invoiceItems[0].quantity) * Number(invoiceItems[0].price);
+
+    console.log("Total Item Value: ", itemValue);
+
+    selectItemContainerPriceValue.textContent = itemValue;
+  }
+}
+
 (async () => {
   // Import issuers and clients form database
   const issuers = await fetchCompanies("http://localhost:8000/allissuers");
@@ -354,24 +373,4 @@ function updateLeadTime(selectDate, selectDueDate) {
 
     priceValueUpdate();
   });
-
-  // PRICE VALUE
-
-  function priceValueUpdate() {
-    const selectItemContainerPriceValue = document.querySelector(
-      ".item-1-price-value"
-    );
-
-    if (invoiceItems[0].quantity !== "" && invoiceItems[0].price !== "") {
-      console.log(invoiceItems[0].quantity);
-      console.log(invoiceItems[0].price);
-
-      const itemValue =
-        Number(invoiceItems[0].quantity) * Number(invoiceItems[0].price);
-
-      console.log("Total Item Value: ", itemValue);
-
-      selectItemContainerPriceValue.textContent = itemValue;
-    }
-  }
 })();
