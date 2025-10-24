@@ -299,7 +299,7 @@ function updateLeadTime(selectDate, selectDueDate) {
       }</td>
           <td class = "item-${index + 1}-quantity">${item.quantity}</td>
           <td class = "item-${index + 1}-price">${item.price}</td>
-          <td class = "item-${index + 1}-price-total">${
+          <td class = "item-${index + 1}-price-value">${
         item.price * item.quantity
       }</td>
           <td class = "item-${index + 1}-vat">${item.vat}</td>
@@ -314,10 +314,7 @@ function updateLeadTime(selectDate, selectDueDate) {
   // ADDING ITEMS LOGIC
   const selectInvoiceItem = document.querySelector("#invoice-item");
   const selectItemQt = document.querySelector("#invoice-qt");
-  const selectInvoiceItemPrice = document.querySelector("#invoice-price");
-  console.log(selectInvoiceItem);
-  console.log(selectItemQt);
-  console.log(selectInvoiceItemPrice);
+  const selectItemPrice = document.querySelector("#invoice-price");
 
   // INVOICE ITEM AND DESCRIPTION ADDED
   selectInvoiceItem.addEventListener("change", () => {
@@ -344,14 +341,37 @@ function updateLeadTime(selectDate, selectDueDate) {
 
     invoiceItems[0].quantity = selectedItemQt;
     selectItemContainer.textContent = selectedItemQt;
+    priceValueUpdate();
   });
 
   // PRICE
-  selectInvoiceItemPrice.addEventListener("change", () => {
-    const selectedItemPrice = selectInvoiceItemPrice.value;
+  selectItemPrice.addEventListener("change", () => {
+    const selectedItemPrice = selectItemPrice.value;
     const selectItemContainer = document.querySelector(".item-1-price");
 
     invoiceItems[0].price = selectedItemPrice;
     selectItemContainer.textContent = selectedItemPrice;
+
+    priceValueUpdate();
   });
+
+  // PRICE VALUE
+
+  function priceValueUpdate() {
+    const selectItemContainerPriceValue = document.querySelector(
+      ".item-1-price-value"
+    );
+
+    if (invoiceItems[0].quantity !== "" && invoiceItems[0].price !== "") {
+      console.log(invoiceItems[0].quantity);
+      console.log(invoiceItems[0].price);
+
+      const itemValue =
+        Number(invoiceItems[0].quantity) * Number(invoiceItems[0].price);
+
+      console.log("Total Item Value: ", itemValue);
+
+      selectItemContainerPriceValue.textContent = itemValue;
+    }
+  }
 })();
