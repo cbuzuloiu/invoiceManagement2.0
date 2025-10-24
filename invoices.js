@@ -124,7 +124,7 @@ function updateLeadTime(selectDate, selectDueDate) {
 }
 
 // PRICE VALUE
-function priceValueUpdate() {
+function priceValueUpdate(invoiceItems) {
   const selectItemContainerPriceValue = document.querySelector(
     ".item-1-price-value"
   );
@@ -139,6 +139,8 @@ function priceValueUpdate() {
     console.log("Total Item Value: ", itemValue);
 
     selectItemContainerPriceValue.textContent = itemValue;
+
+    return itemValue;
   }
 }
 
@@ -361,7 +363,8 @@ function priceValueUpdate() {
 
     invoiceItems[0].quantity = selectedItemQt;
     selectItemContainer.textContent = selectedItemQt;
-    priceValueUpdate();
+    const itemValue = priceValueUpdate(invoiceItems);
+    console.log(itemValue);
   });
 
   // PRICE
@@ -372,7 +375,8 @@ function priceValueUpdate() {
     invoiceItems[0].price = selectedItemPrice;
     selectItemContainer.textContent = selectedItemPrice;
 
-    priceValueUpdate();
+    const itemValue = priceValueUpdate(invoiceItems);
+    console.log(itemValue);
   });
 
   // VAT
