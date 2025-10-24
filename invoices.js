@@ -314,8 +314,10 @@ function updateLeadTime(selectDate, selectDueDate) {
   // ADDING ITEMS LOGIC
   const selectInvoiceItem = document.querySelector("#invoice-item");
   const selectItemQt = document.querySelector("#invoice-qt");
+  const selectInvoiceItemPrice = document.querySelector("#invoice-price");
   console.log(selectInvoiceItem);
   console.log(selectItemQt);
+  console.log(selectInvoiceItemPrice);
 
   // INVOICE ITEM AND DESCRIPTION ADDED
   selectInvoiceItem.addEventListener("change", () => {
@@ -339,9 +341,17 @@ function updateLeadTime(selectDate, selectDueDate) {
   selectItemQt.addEventListener("change", () => {
     const selectedItemQt = selectItemQt.value;
     const selectItemContainer = document.querySelector(".item-1-quantity");
-    console.log(selectItemContainer);
 
     invoiceItems[0].quantity = selectedItemQt;
     selectItemContainer.textContent = selectedItemQt;
+  });
+
+  // PRICE
+  selectInvoiceItemPrice.addEventListener("change", () => {
+    const selectedItemPrice = selectInvoiceItemPrice.value;
+    const selectItemContainer = document.querySelector(".item-1-price");
+
+    invoiceItems[0].price = selectedItemPrice;
+    selectItemContainer.textContent = selectedItemPrice;
   });
 })();
