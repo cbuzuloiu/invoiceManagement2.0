@@ -167,4 +167,34 @@ function updateCompanieDetails(companieType, selectedCompanie) {
       `
     );
   });
+
+  // Populate DueDate
+  const selectDueDate = document.querySelector("#invoice-due-date");
+  let selectedDueDate = null;
+
+  selectDueDate.addEventListener("change", () => {
+    const rawDate = selectDueDate.value; // e.g. "2025-10-22"
+
+    // selectedDate = new Date(rawDate);
+
+    // Format using Romanian locale: DD.MM.YYYY
+    const formattedDueDate = new Date(rawDate).toLocaleDateString("ro-RO", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
+
+    selectedDueDate = formattedDueDate;
+
+    const dateContainer = document.querySelector(".due-date");
+    // Clear old content (so we don’t keep appending)
+    dateContainer.innerHTML = "";
+
+    dateContainer.insertAdjacentHTML(
+      "beforeend",
+      `
+      <h2 class="date">Data scadenta: <span>${selectedDueDate}</span></h2>
+      `
+    );
+  });
 })();
