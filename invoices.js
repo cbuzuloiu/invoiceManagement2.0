@@ -99,6 +99,7 @@ function updateCompanieDetails(companieType, selectedCompanie) {
   });
 }
 
+// Update Lead Time
 function updateLeadTime(selectDate, selectDueDate) {
   const rawDate = selectDate.value;
   const rawDueDate = selectDueDate.value;
@@ -223,5 +224,41 @@ function updateLeadTime(selectDate, selectDueDate) {
     );
 
     updateLeadTime(selectDate, selectDueDate);
+  });
+
+  // Handle Lead Time input → auto-calculate Due Date
+  const leadTimeInput = document.querySelector("#invoice-lead-time");
+
+  leadTimeInput.addEventListener("input", () => {
+    const rawDate = selectDate.value; // "YYYY-MM-DD"
+    const leadTimeDays = Number(leadTimeInput.value); // convert input to number
+
+    // Only proceed if invoice date exists and lead time is valid
+    if (rawDate && !isNaN(leadTimeDays)) {
+      const invoiceDate = new Date(rawDate);
+
+      // Add lead time (days)
+      const dueDate = new Date(invoiceDate);
+      dueDate.setDate(invoiceDate.getDate() + leadTimeDays);
+
+      // Format due date (Romanian locale)
+      const formattedDueDate = dueDate.toLocaleDateString("ro-RO", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      });
+
+      // Update the Due Date input field in "YYYY-MM-DD" format for <input type="date">
+      selectDueDate.value = dueDate.toISOString().split("T")[0];
+
+      // Update the Due Date variable outside the event listener
+      selectedDueDate = formattedDueDate;
+
+      // Update the visible due date container
+      const dueDateContainer = document.querySelector(".due-date");
+      dueDateContainer.innerHTML = `
+      <h2 class="date">Data scadentă: <span>${formattedDueDate}</span></h2>
+    `;
+    }
   });
 })();
