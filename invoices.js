@@ -156,6 +156,40 @@ function vatValueUpdate(itemValue, invoiceItems) {
   }
 }
 
+// ADD NEW ITEM SECTION IN THE INVOICE
+function addNewItemSectionInTheInvoice(
+  invoiceItems,
+  invoiceItem,
+  bodyDataContainer
+) {
+  const newItemId = invoiceItems.length + 1;
+  console.log(newItemId);
+
+  const item = new invoiceItem(newItemId);
+  invoiceItems.push(item);
+
+  bodyDataContainer.insertAdjacentHTML(
+    "beforeend",
+    `
+        <tr class = "item-${newItemId}">
+          <td class = "item-${newItemId}-id">${item.id}</td>
+          <td class = "item-${newItemId}-itemDescription">${
+      item.itemDescription
+    }</td>
+          <td class = "item-${newItemId}-quantity">${item.quantity}</td>
+          <td class = "item-${newItemId}-price">${item.price}</td>
+          <td class = "item-${newItemId}-price-value">${
+      item.price * item.quantity
+    }</td>
+          <td class = "item-${newItemId}-vat">${item.vat}</td>
+          <td class = "item-${newItemId}-vat-prq">${item.vat}%</td>
+        </tr>
+      `
+  );
+
+  return invoiceItems;
+}
+
 (async () => {
   // Import issuers and clients form database
   const issuers = await fetchCompanies("http://localhost:8000/allissuers");
@@ -295,8 +329,7 @@ function vatValueUpdate(itemValue, invoiceItems) {
     }
   });
 
-  // ADD ITEMS SECTION
-
+  // *** ADD ITEMS SECTION ***
   const selectItemsSections = document.querySelectorAll(".items-section-item");
   console.log(selectItemsSections);
 
@@ -316,31 +349,8 @@ function vatValueUpdate(itemValue, invoiceItems) {
   const bodyDataContainer = document.querySelector(".body-data");
   console.log(bodyDataContainer);
 
-  // Loop through each .items-section-item element
-  selectItemsSections.forEach((section, index) => {
-    // Create a new empty invoiceItem object for each section
-    const item = new invoiceItem(index + 1);
-    invoiceItems.push(item);
-
-    bodyDataContainer.insertAdjacentHTML(
-      "beforeend",
-      `
-        <tr class = "item-${index + 1}">
-          <td class = "item-${index + 1}-id">${item.id}</td>
-          <td class = "item-${index + 1}-itemDescription">${
-        item.itemDescription
-      }</td>
-          <td class = "item-${index + 1}-quantity">${item.quantity}</td>
-          <td class = "item-${index + 1}-price">${item.price}</td>
-          <td class = "item-${index + 1}-price-value">${
-        item.price * item.quantity
-      }</td>
-          <td class = "item-${index + 1}-vat">${item.vat}</td>
-          <td class = "item-${index + 1}-vat-prq">${item.vat}%</td>
-        </tr>
-      `
-    );
-  });
+  // ADD NEW ITEM SECTION IN THE INVOICE
+  addNewItemSectionInTheInvoice(invoiceItems, invoiceItem, bodyDataContainer);
 
   console.log("Initial invoice items:", invoiceItems);
 
@@ -458,33 +468,8 @@ function vatValueUpdate(itemValue, invoiceItems) {
               </div>`
     );
 
-    // 🧠 Re-select the updated NodeList after adding the new element
-    const updatedSections = document.querySelectorAll(".items-section-item");
-
-    const newItemId = invoiceItems.length + 1;
-    console.log(newItemId);
-
-    const item = new invoiceItem(newItemId);
-    invoiceItems.push(item);
-
-    bodyDataContainer.insertAdjacentHTML(
-      "beforeend",
-      `
-        <tr class = "item-${newItemId}">
-          <td class = "item-${newItemId}-id">${item.id}</td>
-          <td class = "item-${newItemId}-itemDescription">${
-        item.itemDescription
-      }</td>
-          <td class = "item-${newItemId}-quantity">${item.quantity}</td>
-          <td class = "item-${newItemId}-price">${item.price}</td>
-          <td class = "item-${newItemId}-price-value">${
-        item.price * item.quantity
-      }</td>
-          <td class = "item-${newItemId}-vat">${item.vat}</td>
-          <td class = "item-${newItemId}-vat-prq">${item.vat}%</td>
-        </tr>
-      `
-    );
+    // ADD NEW ITEM SECTION IN THE INVOICE
+    addNewItemSectionInTheInvoice(invoiceItems, invoiceItem, bodyDataContainer);
 
     console.log("New Invoice Items List:", invoiceItems);
   });
