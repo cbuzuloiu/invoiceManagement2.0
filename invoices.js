@@ -417,7 +417,7 @@ function addNewItemSectionInTheInvoice(
     vatValueUpdate(itemValue, invoiceItems);
   });
 
-  // ADD NEW ITEM
+  // *** ADD NEW ITEM ***
   const addNewItemBtn = document.querySelector(".add-item-btn");
   const insertItemPosition = document.querySelector(".invoice-nav");
   console.log(addNewItemBtn);
