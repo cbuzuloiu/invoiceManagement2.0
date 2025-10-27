@@ -213,6 +213,26 @@ function addInvoiceItemDescription(selectInvoiceItem, invoiceItems) {
   });
 }
 
+// QUANTITY
+function addInvoiceItemQt(selectItemQt, invoiceItems, itemValue) {
+  selectItemQt.forEach((itemInput, index) => {
+    itemInput.addEventListener("change", () => {
+      const selectedItemQt = itemInput.value;
+      const selectItemContainer = document.querySelector(
+        `.item-${index + 1}-quantity`
+      );
+
+      invoiceItems[index].quantity = selectedItemQt;
+      selectItemContainer.textContent = selectedItemQt;
+
+      itemValue = priceValueUpdate(invoiceItems);
+      vatValueUpdate(itemValue, invoiceItems);
+      console.log(itemValue);
+      console.log(invoiceItems[index]);
+    });
+  });
+}
+
 (async () => {
   // Import issuers and clients form database
   const issuers = await fetchCompanies("http://localhost:8000/allissuers");
@@ -379,7 +399,7 @@ function addInvoiceItemDescription(selectInvoiceItem, invoiceItems) {
 
   // ADDING ITEMS LOGIC
   const selectInvoiceItem = document.querySelectorAll(".invoice-item");
-  const selectItemQt = document.querySelector("#invoice-qt");
+  const selectItemQt = document.querySelectorAll(".invoice-qt");
   const selectItemPrice = document.querySelector("#invoice-price");
   const selectItemVat = document.querySelector("#invoice-vat");
 
@@ -389,17 +409,18 @@ function addInvoiceItemDescription(selectInvoiceItem, invoiceItems) {
   let itemValue = 0; // must be declared before quantity, price and vat event listeners
 
   // QUANTITY
-  selectItemQt.addEventListener("change", () => {
-    const selectedItemQt = selectItemQt.value;
-    const selectItemContainer = document.querySelector(".item-1-quantity");
+  addInvoiceItemQt(selectItemQt, invoiceItems, itemValue);
+  // selectItemQt.addEventListener("change", () => {
+  //   const selectedItemQt = selectItemQt.value;
+  //   const selectItemContainer = document.querySelector(".item-1-quantity");
 
-    invoiceItems[0].quantity = selectedItemQt;
-    selectItemContainer.textContent = selectedItemQt;
+  //   invoiceItems[0].quantity = selectedItemQt;
+  //   selectItemContainer.textContent = selectedItemQt;
 
-    itemValue = priceValueUpdate(invoiceItems);
-    vatValueUpdate(itemValue, invoiceItems);
-    console.log(itemValue);
-  });
+  //   itemValue = priceValueUpdate(invoiceItems);
+  //   vatValueUpdate(itemValue, invoiceItems);
+  //   console.log(itemValue);
+  // });
 
   // PRICE
   selectItemPrice.addEventListener("change", () => {
@@ -451,6 +472,7 @@ function addInvoiceItemDescription(selectInvoiceItem, invoiceItems) {
                   <input
                     type="number"
                     id="invoice-qt"
+                    class="invoice-qt"
                     name="invoice-qt"
                     placeholder="Add item quantity"
                   />
@@ -480,11 +502,15 @@ function addInvoiceItemDescription(selectInvoiceItem, invoiceItems) {
     // ADD NEW ITEM SECTION IN THE INVOICE
     addNewItemSectionInTheInvoice(invoiceItems, invoiceItem, bodyDataContainer);
 
-    // Refresh node list
+    // Refresh node list !!! important :)))
     const selectInvoiceItem = document.querySelectorAll(".invoice-item");
+    const selectItemQt = document.querySelectorAll(".invoice-qt");
 
     // Add new item description
     addInvoiceItemDescription(selectInvoiceItem, invoiceItems);
+
+    // Add new item quantity
+    addInvoiceItemQt(selectItemQt, invoiceItems, itemValue);
 
     console.log("New Invoice Items List:", invoiceItems);
   });
