@@ -355,28 +355,51 @@ function addNewItemSectionInTheInvoice(
   console.log("Initial invoice items:", invoiceItems);
 
   // ADDING ITEMS LOGIC
-  const selectInvoiceItem = document.querySelector("#invoice-item");
+  const selectInvoiceItem = document.querySelectorAll(".invoice-item");
   const selectItemQt = document.querySelector("#invoice-qt");
   const selectItemPrice = document.querySelector("#invoice-price");
   const selectItemVat = document.querySelector("#invoice-vat");
 
   // INVOICE ITEM AND DESCRIPTION ADDED
-  selectInvoiceItem.addEventListener("change", () => {
-    const selectedValue = selectInvoiceItem.value;
-    const selectItemContainer = document.querySelector(
-      ".item-1-itemDescription"
-    );
-    console.log(selectItemContainer);
-    console.log("Selected item:", selectedValue);
+  selectInvoiceItem.forEach((itemInput, index) => {
+    itemInput.addEventListener("change", (e) => {
+      console.log("Index of the item is: ", index);
+      const selectedValue = itemInput.value;
+      // console.log(e);
+      console.log(selectedValue);
 
-    // Assume for now you want to populate the FIRST invoice item
-    // Later we’ll map this dynamically (based on which section is active)
-    invoiceItems[0].itemDescription = selectedValue;
+      const selectItemContainer = document.querySelector(
+        `.item-${index + 1}-itemDescription`
+      );
+      console.log(selectItemContainer);
+      console.log("Selected item:", selectedValue);
 
-    console.log("Updated invoice items:", invoiceItems);
+      // Assume for now you want to populate the FIRST invoice item
+      // Later we’ll map this dynamically (based on which section is active)
+      invoiceItems[index].itemDescription = selectedValue;
 
-    selectItemContainer.textContent = selectedValue;
+      console.log("Updated invoice items:", invoiceItems);
+
+      selectItemContainer.textContent = selectedValue;
+    });
   });
+
+  // selectInvoiceItem.addEventListener("change", () => {
+  //   const selectedValue = selectInvoiceItem.value; ***
+  //   const selectItemContainer = document.querySelector(
+  //     ".item-1-itemDescription"
+  //   );
+  //   console.log(selectItemContainer);
+  //   console.log("Selected item:", selectedValue);
+
+  //   // Assume for now you want to populate the FIRST invoice item
+  //   // Later we’ll map this dynamically (based on which section is active)
+  //   invoiceItems[0].itemDescription = selectedValue;
+
+  //   console.log("Updated invoice items:", invoiceItems);
+
+  //   selectItemContainer.textContent = selectedValue;
+  // });
 
   let itemValue = 0; // must be declared before quantity, price and vat event listeners
 
@@ -432,6 +455,7 @@ function addNewItemSectionInTheInvoice(
                   <input
                     type="text-area"
                     id="invoice-item"
+                    class="invoice-item"
                     name="invoice-item"
                     placeholder="Add item description"
                   />
@@ -471,6 +495,33 @@ function addNewItemSectionInTheInvoice(
     // ADD NEW ITEM SECTION IN THE INVOICE
     addNewItemSectionInTheInvoice(invoiceItems, invoiceItem, bodyDataContainer);
 
+    // *****
+    const selectInvoiceItem = document.querySelectorAll(".invoice-item");
+    console.log(selectInvoiceItem);
+    selectInvoiceItem.forEach((itemInput, index) => {
+      itemInput.addEventListener("change", (e) => {
+        console.log("Index of the item is: ", index);
+        const selectedValue = itemInput.value;
+        // console.log(e);
+        console.log(selectedValue);
+
+        const selectItemContainer = document.querySelector(
+          `.item-${index + 1}-itemDescription`
+        );
+        console.log(selectItemContainer);
+        console.log("Selected item:", selectedValue);
+
+        // Assume for now you want to populate the FIRST invoice item
+        // Later we’ll map this dynamically (based on which section is active)
+        invoiceItems[index].itemDescription = selectedValue;
+
+        console.log("Updated invoice items:", invoiceItems);
+
+        selectItemContainer.textContent = selectedValue;
+      });
+    });
+
     console.log("New Invoice Items List:", invoiceItems);
+    console.log(selectInvoiceItem);
   });
 })();
