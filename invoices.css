@@ -90,7 +90,8 @@
 }
 
 /* button for add itme */
-.add-item-btn {
+.add-item-btn,
+.save-invoice-btn {
   display: inline-flex;
   align-items: center;
   gap: 10px;
@@ -114,7 +115,8 @@
 } */
 
 /* Hover effects */
-.add-item-btn:hover {
+.add-item-btn:hover,
+.save-invoice-btn:hover {
   background-color: #1976d2;
   color: white;
   box-shadow: 0 4px 10px rgba(25, 118, 210, 0.4);
@@ -126,7 +128,8 @@
 }
 
 /* Active click feedback */
-.add-item-btn:active {
+.add-item-btn:active,
+.save-invoice-btn:active {
   transform: scale(0.97);
 }
 
