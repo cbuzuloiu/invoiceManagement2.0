@@ -406,4 +406,56 @@ function vatValueUpdate(itemValue, invoiceItems) {
 
     vatValueUpdate(itemValue, invoiceItems);
   });
+
+  // ADD NEW ITEM
+  const addNewItemBtn = document.querySelector(".add-item-btn");
+  const insertItemPosition = document.querySelector(".invoice-nav");
+  console.log(addNewItemBtn);
+  console.log(insertItemPosition);
+
+  addNewItemBtn.addEventListener("click", () => {
+    insertItemPosition.insertAdjacentHTML(
+      "beforebegin",
+      ` <div class="items-section-item">
+                <div class="form-data-group">
+                  <label for="invoice-item"><p>Item Description:</p></label>
+                  <input
+                    type="text-area"
+                    id="invoice-item"
+                    name="invoice-item"
+                    placeholder="Add item description"
+                  />
+                </div>
+
+                <div class="form-data-group">
+                  <label for="invoice-qt"><p>Quantity:</p></label>
+                  <input
+                    type="number"
+                    id="invoice-qt"
+                    name="invoice-qt"
+                    placeholder="Add item quantity"
+                  />
+                </div>
+
+                <div class="form-data-group">
+                  <label for="invoice-price"><p>Price without VAT:</p></label>
+                  <input
+                    type="number"
+                    id="invoice-price"
+                    name="invoice-price"
+                    placeholder="Add price without VAT"
+                  />
+                </div>
+                <div class="form-data-group">
+                  <label for="invoice-vat"><p>VAT in %:</p></label>
+                  <input
+                    type="number"
+                    id="invoice-vat"
+                    name="invoice-vat"
+                    placeholder="Add VAT: ex. 21"
+                  />
+                </div>
+              </div>`
+    );
+  });
 })();
