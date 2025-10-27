@@ -457,5 +457,35 @@ function vatValueUpdate(itemValue, invoiceItems) {
                 </div>
               </div>`
     );
+
+    // 🧠 Re-select the updated NodeList after adding the new element
+    const updatedSections = document.querySelectorAll(".items-section-item");
+
+    const newItemId = invoiceItems.length + 1;
+    console.log(newItemId);
+
+    const item = new invoiceItem(newItemId);
+    invoiceItems.push(item);
+
+    bodyDataContainer.insertAdjacentHTML(
+      "beforeend",
+      `
+        <tr class = "item-${newItemId}">
+          <td class = "item-${newItemId}-id">${item.id}</td>
+          <td class = "item-${newItemId}-itemDescription">${
+        item.itemDescription
+      }</td>
+          <td class = "item-${newItemId}-quantity">${item.quantity}</td>
+          <td class = "item-${newItemId}-price">${item.price}</td>
+          <td class = "item-${newItemId}-price-value">${
+        item.price * item.quantity
+      }</td>
+          <td class = "item-${newItemId}-vat">${item.vat}</td>
+          <td class = "item-${newItemId}-vat-prq">${item.vat}%</td>
+        </tr>
+      `
+    );
+
+    console.log("New Invoice Items List:", invoiceItems);
   });
 })();
