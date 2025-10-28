@@ -124,17 +124,17 @@ function updateLeadTime(selectDate, selectDueDate) {
 }
 
 // PRICE VALUE
-function priceValueUpdate(invoiceItems) {
+function priceValueUpdate(invoiceItems, index) {
   const selectItemContainerPriceValue = document.querySelector(
-    ".item-1-price-value"
+    `.item-${index + 1}-price-value`
   );
 
-  if (invoiceItems[0].quantity !== "" && invoiceItems[0].price !== "") {
-    console.log(invoiceItems[0].quantity);
-    console.log(invoiceItems[0].price);
+  if (invoiceItems[index].quantity !== "" && invoiceItems[index].price !== "") {
+    console.log(invoiceItems[index].quantity);
+    console.log(invoiceItems[index].price);
 
     const itemValue =
-      Number(invoiceItems[0].quantity) * Number(invoiceItems[0].price);
+      Number(invoiceItems[index].quantity) * Number(invoiceItems[index].price);
 
     console.log("Total Item Value: ", itemValue);
 
@@ -145,11 +145,14 @@ function priceValueUpdate(invoiceItems) {
 }
 
 // VAT VALUE
-function vatValueUpdate(itemValue, invoiceItems) {
-  const selectItemContainerVatPrice = document.querySelector(".item-1-vat");
+function vatValueUpdate(itemValue, invoiceItems, index) {
+  const selectItemContainerVatPrice = document.querySelector(
+    `.item-${index + 1}-vat`
+  );
   console.log(itemValue);
 
-  const vatValuePrice = Number(itemValue) * (Number(invoiceItems[0].vat) / 100);
+  const vatValuePrice =
+    Number(itemValue) * (Number(invoiceItems[index].vat) / 100);
 
   if (!Number.isNaN(vatValuePrice)) {
     selectItemContainerVatPrice.textContent = vatValuePrice;
@@ -225,10 +228,12 @@ function addInvoiceItemQt(selectItemQt, invoiceItems, itemValue) {
       invoiceItems[index].quantity = selectedItemQt;
       selectItemContainer.textContent = selectedItemQt;
 
-      itemValue = priceValueUpdate(invoiceItems);
-      vatValueUpdate(itemValue, invoiceItems);
+      itemValue = priceValueUpdate(invoiceItems, index);
+      vatValueUpdate(itemValue, invoiceItems, index);
       console.log(itemValue);
       console.log(invoiceItems[index]);
+
+      return itemValue;
     });
   });
 }
@@ -400,8 +405,8 @@ function addInvoiceItemQt(selectItemQt, invoiceItems, itemValue) {
   // ADDING ITEMS LOGIC
   const selectInvoiceItem = document.querySelectorAll(".invoice-item");
   const selectItemQt = document.querySelectorAll(".invoice-qt");
-  const selectItemPrice = document.querySelector("#invoice-price");
-  const selectItemVat = document.querySelector("#invoice-vat");
+  const selectItemPrice = document.querySelectorAll(".invoice-price");
+  const selectItemVat = document.querySelectorAll(".invoice-vat");
 
   // INVOICE ITEM AND DESCRIPTION ADDED
   addInvoiceItemDescription(selectInvoiceItem, invoiceItems);
@@ -409,7 +414,7 @@ function addInvoiceItemQt(selectItemQt, invoiceItems, itemValue) {
   let itemValue = 0; // must be declared before quantity, price and vat event listeners
 
   // QUANTITY
-  addInvoiceItemQt(selectItemQt, invoiceItems, itemValue);
+  itemValue = addInvoiceItemQt(selectItemQt, invoiceItems, itemValue);
   // selectItemQt.addEventListener("change", () => {
   //   const selectedItemQt = selectItemQt.value;
   //   const selectItemContainer = document.querySelector(".item-1-quantity");
@@ -423,28 +428,72 @@ function addInvoiceItemQt(selectItemQt, invoiceItems, itemValue) {
   // });
 
   // PRICE
-  selectItemPrice.addEventListener("change", () => {
-    const selectedItemPrice = selectItemPrice.value;
-    const selectItemContainer = document.querySelector(".item-1-price");
+  function addInvoiceItemPrice(selectItemPrice, invoiceItems, itemValue) {
+    selectItemPrice.forEach((itemInput, index) => {
+      itemInput.addEventListener("change", () => {
+        const selectedItemPrice = itemInput.value;
+        const selectItemContainer = document.querySelector(
+          `.item-${index + 1}-price`
+        );
 
-    invoiceItems[0].price = selectedItemPrice;
-    selectItemContainer.textContent = selectedItemPrice;
+        invoiceItems[index].price = selectedItemPrice;
+        selectItemContainer.textContent = selectedItemPrice;
 
-    itemValue = priceValueUpdate(invoiceItems);
-    vatValueUpdate(itemValue, invoiceItems);
-    console.log(itemValue);
-  });
+        itemValue = priceValueUpdate(invoiceItems, index);
+        vatValueUpdate(itemValue, invoiceItems, index);
+        console.log(itemValue);
+
+        return itemValue;
+      });
+    });
+  }
+  itemValue = addInvoiceItemPrice(selectItemPrice, invoiceItems, itemValue);
+  // selectItemPrice.addEventListener("change", () => {
+  //   const selectedItemPrice = selectItemPrice.value;
+  //   const selectItemContainer = document.querySelector(".item-1-price");
+
+  //   invoiceItems[0].price = selectedItemPrice;
+  //   selectItemContainer.textContent = selectedItemPrice;
+
+  //   itemValue = priceValueUpdate(invoiceItems);
+  //   vatValueUpdate(itemValue, invoiceItems);
+  //   console.log(itemValue);
+  // });
 
   // VAT
-  selectItemVat.addEventListener("change", () => {
-    const selectedItemVat = selectItemVat.value;
-    const selectItemContainer = document.querySelector(".item-1-vat-prq");
 
-    invoiceItems[0].vat = selectedItemVat;
-    selectItemContainer.textContent = selectedItemVat;
+  function addInvoiceItemVat(selectItemVat, invoiceItems, itemValue) {
+    selectItemVat.forEach((itemInput, index) => {
+      itemInput.addEventListener("change", () => {
+        const selectedItemVat = itemInput.value;
+        const selectItemContainer = document.querySelector(
+          `.item-${index + 1}-vat-prq`
+        );
 
-    vatValueUpdate(itemValue, invoiceItems);
-  });
+        invoiceItems[index].vat = selectedItemVat;
+        selectItemContainer.textContent = selectedItemVat;
+
+        // Recompute item value before updating VAT to avoid using a stale value
+        itemValue = priceValueUpdate(invoiceItems, index);
+        vatValueUpdate(itemValue, invoiceItems, index);
+
+        return itemValue;
+      });
+    });
+  }
+
+  itemValue = addInvoiceItemVat(selectItemVat, invoiceItems, itemValue);
+  // selectItemVat.addEventListener("change", () => {
+  //   const selectedItemVat = selectItemVat.value;
+  //   const selectItemContainer = document.querySelector(".item-1-vat-prq");
+
+  //   invoiceItems[0].vat = selectedItemVat;
+  //   selectItemContainer.textContent = selectedItemVat;
+
+  //   // Recompute item value before updating VAT to avoid using a stale value
+  //   itemValue = priceValueUpdate(invoiceItems, index);
+  //   vatValueUpdate(itemValue, invoiceItems);
+  // });
 
   // *** ADD NEW ITEM ***
   const addNewItemBtn = document.querySelector(".add-item-btn");
@@ -483,6 +532,7 @@ function addInvoiceItemQt(selectItemQt, invoiceItems, itemValue) {
                   <input
                     type="number"
                     id="invoice-price"
+                    class="invoice-price"
                     name="invoice-price"
                     placeholder="Add price without VAT"
                   />
@@ -492,6 +542,7 @@ function addInvoiceItemQt(selectItemQt, invoiceItems, itemValue) {
                   <input
                     type="number"
                     id="invoice-vat"
+                    class="invoice-vat"
                     name="invoice-vat"
                     placeholder="Add VAT: ex. 21"
                   />
@@ -505,12 +556,20 @@ function addInvoiceItemQt(selectItemQt, invoiceItems, itemValue) {
     // Refresh node list !!! important :)))
     const selectInvoiceItem = document.querySelectorAll(".invoice-item");
     const selectItemQt = document.querySelectorAll(".invoice-qt");
+    const selectItemPrice = document.querySelectorAll(".invoice-price");
+    const selectItemVat = document.querySelectorAll(".invoice-vat");
 
     // Add new item description
     addInvoiceItemDescription(selectInvoiceItem, invoiceItems);
 
     // Add new item quantity
     addInvoiceItemQt(selectItemQt, invoiceItems, itemValue);
+
+    // Add new item price
+    addInvoiceItemPrice(selectItemPrice, invoiceItems, itemValue);
+
+    // Add new vat
+    addInvoiceItemVat(selectItemVat, invoiceItems, itemValue);
 
     console.log("New Invoice Items List:", invoiceItems);
   });
