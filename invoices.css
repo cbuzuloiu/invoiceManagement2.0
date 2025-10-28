@@ -64,7 +64,11 @@
 #invoice-item,
 #invoice-qt,
 #invoice-price,
-#invoice-vat {
+#invoice-vat,
+.invoice-item,
+.invoice-qt,
+.invoice-price,
+.invoice-vat {
   padding: 1rem;
   border: 1px solid #ccc;
   border-radius: 6px;

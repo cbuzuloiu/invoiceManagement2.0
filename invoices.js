@@ -478,7 +478,6 @@ function addInvoiceItemVat(selectItemVat, invoiceItems, itemValue) {
                   <label for="invoice-item"><p>Item Description:</p></label>
                   <input
                     type="text-area"
-                    id="invoice-item"
                     class="invoice-item"
                     name="invoice-item"
                     placeholder="Add item description"
@@ -489,7 +488,6 @@ function addInvoiceItemVat(selectItemVat, invoiceItems, itemValue) {
                   <label for="invoice-qt"><p>Quantity:</p></label>
                   <input
                     type="number"
-                    id="invoice-qt"
                     class="invoice-qt"
                     name="invoice-qt"
                     placeholder="Add item quantity"
@@ -500,7 +498,6 @@ function addInvoiceItemVat(selectItemVat, invoiceItems, itemValue) {
                   <label for="invoice-price"><p>Price without VAT:</p></label>
                   <input
                     type="number"
-                    id="invoice-price"
                     class="invoice-price"
                     name="invoice-price"
                     placeholder="Add price without VAT"
@@ -510,7 +507,6 @@ function addInvoiceItemVat(selectItemVat, invoiceItems, itemValue) {
                   <label for="invoice-vat"><p>VAT in %:</p></label>
                   <input
                     type="number"
-                    id="invoice-vat"
                     class="invoice-vat"
                     name="invoice-vat"
                     placeholder="Add VAT: ex. 21"
