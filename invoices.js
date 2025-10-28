@@ -238,6 +238,48 @@ function addInvoiceItemQt(selectItemQt, invoiceItems, itemValue) {
   });
 }
 
+// PRICE
+function addInvoiceItemPrice(selectItemPrice, invoiceItems, itemValue) {
+  selectItemPrice.forEach((itemInput, index) => {
+    itemInput.addEventListener("change", () => {
+      const selectedItemPrice = itemInput.value;
+      const selectItemContainer = document.querySelector(
+        `.item-${index + 1}-price`
+      );
+
+      invoiceItems[index].price = selectedItemPrice;
+      selectItemContainer.textContent = selectedItemPrice;
+
+      itemValue = priceValueUpdate(invoiceItems, index);
+      vatValueUpdate(itemValue, invoiceItems, index);
+      console.log(itemValue);
+
+      return itemValue;
+    });
+  });
+}
+
+// VAT
+function addInvoiceItemVat(selectItemVat, invoiceItems, itemValue) {
+  selectItemVat.forEach((itemInput, index) => {
+    itemInput.addEventListener("change", () => {
+      const selectedItemVat = itemInput.value;
+      const selectItemContainer = document.querySelector(
+        `.item-${index + 1}-vat-prq`
+      );
+
+      invoiceItems[index].vat = selectedItemVat;
+      selectItemContainer.textContent = selectedItemVat;
+
+      // Recompute item value before updating VAT to avoid using a stale value
+      itemValue = priceValueUpdate(invoiceItems, index);
+      vatValueUpdate(itemValue, invoiceItems, index);
+
+      return itemValue;
+    });
+  });
+}
+
 (async () => {
   // Import issuers and clients form database
   const issuers = await fetchCompanies("http://localhost:8000/allissuers");
@@ -415,85 +457,12 @@ function addInvoiceItemQt(selectItemQt, invoiceItems, itemValue) {
 
   // QUANTITY
   itemValue = addInvoiceItemQt(selectItemQt, invoiceItems, itemValue);
-  // selectItemQt.addEventListener("change", () => {
-  //   const selectedItemQt = selectItemQt.value;
-  //   const selectItemContainer = document.querySelector(".item-1-quantity");
-
-  //   invoiceItems[0].quantity = selectedItemQt;
-  //   selectItemContainer.textContent = selectedItemQt;
-
-  //   itemValue = priceValueUpdate(invoiceItems);
-  //   vatValueUpdate(itemValue, invoiceItems);
-  //   console.log(itemValue);
-  // });
 
   // PRICE
-  function addInvoiceItemPrice(selectItemPrice, invoiceItems, itemValue) {
-    selectItemPrice.forEach((itemInput, index) => {
-      itemInput.addEventListener("change", () => {
-        const selectedItemPrice = itemInput.value;
-        const selectItemContainer = document.querySelector(
-          `.item-${index + 1}-price`
-        );
-
-        invoiceItems[index].price = selectedItemPrice;
-        selectItemContainer.textContent = selectedItemPrice;
-
-        itemValue = priceValueUpdate(invoiceItems, index);
-        vatValueUpdate(itemValue, invoiceItems, index);
-        console.log(itemValue);
-
-        return itemValue;
-      });
-    });
-  }
   itemValue = addInvoiceItemPrice(selectItemPrice, invoiceItems, itemValue);
-  // selectItemPrice.addEventListener("change", () => {
-  //   const selectedItemPrice = selectItemPrice.value;
-  //   const selectItemContainer = document.querySelector(".item-1-price");
-
-  //   invoiceItems[0].price = selectedItemPrice;
-  //   selectItemContainer.textContent = selectedItemPrice;
-
-  //   itemValue = priceValueUpdate(invoiceItems);
-  //   vatValueUpdate(itemValue, invoiceItems);
-  //   console.log(itemValue);
-  // });
 
   // VAT
-
-  function addInvoiceItemVat(selectItemVat, invoiceItems, itemValue) {
-    selectItemVat.forEach((itemInput, index) => {
-      itemInput.addEventListener("change", () => {
-        const selectedItemVat = itemInput.value;
-        const selectItemContainer = document.querySelector(
-          `.item-${index + 1}-vat-prq`
-        );
-
-        invoiceItems[index].vat = selectedItemVat;
-        selectItemContainer.textContent = selectedItemVat;
-
-        // Recompute item value before updating VAT to avoid using a stale value
-        itemValue = priceValueUpdate(invoiceItems, index);
-        vatValueUpdate(itemValue, invoiceItems, index);
-
-        return itemValue;
-      });
-    });
-  }
-
   itemValue = addInvoiceItemVat(selectItemVat, invoiceItems, itemValue);
-  // selectItemVat.addEventListener("change", () => {
-  //   const selectedItemVat = selectItemVat.value;
-  //   const selectItemContainer = document.querySelector(".item-1-vat-prq");
-
-  //   invoiceItems[0].vat = selectedItemVat;
-  //   selectItemContainer.textContent = selectedItemVat;
-
-  //   // Recompute item value before updating VAT to avoid using a stale value
-  //   itemValue = priceValueUpdate(invoiceItems, index);
-  //   vatValueUpdate(itemValue, invoiceItems);
-  // });
 
   // *** ADD NEW ITEM ***
   const addNewItemBtn = document.querySelector(".add-item-btn");
