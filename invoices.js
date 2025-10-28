@@ -233,6 +233,9 @@ function addInvoiceItemQt(selectItemQt, invoiceItems, itemValue) {
       console.log(itemValue);
       console.log(invoiceItems[index]);
 
+      // Update totals in the table footre
+      updateTableFooter(invoiceItems);
+
       return itemValue;
     });
   });
@@ -253,6 +256,9 @@ function addInvoiceItemPrice(selectItemPrice, invoiceItems, itemValue) {
       itemValue = priceValueUpdate(invoiceItems, index);
       vatValueUpdate(itemValue, invoiceItems, index);
       console.log(itemValue);
+
+      // Update totals in the table footre
+      updateTableFooter(invoiceItems);
 
       return itemValue;
     });
@@ -275,9 +281,39 @@ function addInvoiceItemVat(selectItemVat, invoiceItems, itemValue) {
       itemValue = priceValueUpdate(invoiceItems, index);
       vatValueUpdate(itemValue, invoiceItems, index);
 
+      // Update totals in the table footre
+      updateTableFooter(invoiceItems);
+
       return itemValue;
     });
   });
+}
+
+// Update totals in the table footre
+function updateTableFooter(invoiceItems) {
+  const containerTotalWithoutVat = document.querySelector(".total-without-vat");
+
+  const containerTotalVat = document.querySelector(".total-vat");
+  const containerTotal = document.querySelector(".total");
+
+  let totalWithoutVat = 0;
+  let totalVat = 0;
+  let total = 0;
+
+  invoiceItems.forEach((item) => {
+    console.log(item.itemDescription);
+    const priceValue = Number(item.quantity) * Number(item.price);
+    const itemVat = priceValue * (Number(item.vat) / 100);
+
+    totalWithoutVat += priceValue;
+    totalVat += itemVat;
+  });
+
+  total += totalWithoutVat + totalVat;
+
+  containerTotalWithoutVat.textContent = totalWithoutVat;
+  containerTotalVat.textContent = totalVat;
+  containerTotal.textContent = total;
 }
 
 (async () => {
@@ -538,6 +574,8 @@ function addInvoiceItemVat(selectItemVat, invoiceItems, itemValue) {
 
     console.log("New Invoice Items List:", invoiceItems);
   });
+
+  // TOTAL SECTION
 
   // ****
 
