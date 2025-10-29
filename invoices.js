@@ -17,10 +17,6 @@ import {
   // Import issuers and clients form database
   const issuers = await fetchCompanies("http://localhost:8000/allissuers");
   const clients = await fetchCompanies("http://localhost:8000/allclients");
-  const invoices = await fetchCompanies(
-    "http://localhost:8000/allissuerinvoices/1"
-  );
-  console.log(invoices);
 
   console.log("Issuer: ", issuers);
   console.log("Clients: ", clients);
@@ -29,16 +25,27 @@ import {
   const selectIssuer = selectCompany("issuer", issuers);
   let selectedIssuer = null; // variable to store the selected issuer form the event listener
 
-  selectIssuer.addEventListener("change", () => {
+  selectIssuer.addEventListener("change", async () => {
     const selectedIssuerId = Number(selectIssuer.value);
 
     // search for issuer with id of selectedIssuerId
     // variable has to be declared outside the event listener
     selectedIssuer = issuers.find((issuer) => issuer.id === selectedIssuerId);
 
+    console.log("****************************************");
     console.log("Selected Issuer is: ", selectedIssuer);
 
     updateCompanieDetails("issuer", selectedIssuer);
+
+    // *** Get all invoices for Issuer by ID
+
+    console.log(selectedIssuer.id);
+    const invoices = await fetchCompanies(
+      `http://localhost:8000/allissuerinvoices/${selectedIssuer.id}`
+    );
+    console.log(invoices);
+
+    // ***
   });
 
   // Populate Client <select>

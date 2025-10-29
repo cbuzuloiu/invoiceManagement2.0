@@ -2,8 +2,17 @@ export async function fetchCompanies(url) {
   try {
     const response = await fetch(`${url}`);
 
+    // Handle non-OK responses
     if (!response.ok) {
-      throw new Error("Network response was not ok");
+      let errorMsg = "Unknown error";
+
+      try {
+        const errorData = await response.json();
+        errorMsg = errorData.error || JSON.stringify(errorData);
+      } catch {
+        errorMsg = response.statusText;
+      }
+      throw new Error(`HTTP ${response.status}: ${errorMsg}`);
     }
 
     const data = await response.json();
@@ -16,7 +25,7 @@ export async function fetchCompanies(url) {
       : [];
     return sorted;
   } catch (error) {
-    console.error("There was a problem with the fetch operation:", error);
-    return [];
+    console.error("Fetch error:", error);
+    return { error: error.message, data: [] };
   }
 }
