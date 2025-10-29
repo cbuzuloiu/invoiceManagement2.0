@@ -1,25 +1,4 @@
-async function fetchCompanies(url) {
-  try {
-    const response = await fetch(`${url}`);
-
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-
-    const data = await response.json();
-    const sorted = Array.isArray(data)
-      ? data.slice().sort((a, b) => {
-          const ai = Number(a?.id ?? Number.MAX_SAFE_INTEGER);
-          const bi = Number(b?.id ?? Number.MAX_SAFE_INTEGER);
-          return ai - bi;
-        })
-      : [];
-    return sorted;
-  } catch (error) {
-    console.error("There was a problem with the fetch operation:", error);
-    return [];
-  }
-}
+import { fetchCompanies } from "./fetchDataFromDatabase.js";
 
 // Populate <select>
 // companieType Client or Issuer, companies is the issuers or clietns array
@@ -320,6 +299,10 @@ function updateTableFooter(invoiceItems) {
   // Import issuers and clients form database
   const issuers = await fetchCompanies("http://localhost:8000/allissuers");
   const clients = await fetchCompanies("http://localhost:8000/allclients");
+  const invoices = await fetchCompanies(
+    "http://localhost:8000/allissuerinvoices/1"
+  );
+  console.log(invoices);
 
   console.log("Issuer: ", issuers);
   console.log("Clients: ", clients);
@@ -574,8 +557,6 @@ function updateTableFooter(invoiceItems) {
 
     console.log("New Invoice Items List:", invoiceItems);
   });
-
-  // TOTAL SECTION
 
   // ****
 
