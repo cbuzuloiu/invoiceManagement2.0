@@ -60,6 +60,7 @@ import { invoice } from "./invoiceClass.js";
 
     invoiceIdNumberContainerChange(invoiceId);
     invoiceObj.idInvoice = invoiceId;
+    invoiceObj.idIssuer = selectedIssuer.id;
     // ***
   });
 
