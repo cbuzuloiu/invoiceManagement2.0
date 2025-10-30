@@ -59,6 +59,15 @@ import {
       console.log(invoiceId);
     }
 
+    if (invoices.length > 0) {
+      console.log(invoices.length);
+      const firstLetterOfIssuerName = selectedIssuer?.name?.[0] ?? ""; // "" if name is undefined or empty
+
+      invoiceId = `${firstLetterOfIssuerName}-${selectedIssuer.cui}-${
+        invoices.length + 1
+      }`;
+    }
+
     invoiceIdNumberContainerChange(invoiceId);
     // ***
   });
