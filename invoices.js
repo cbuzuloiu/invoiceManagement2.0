@@ -13,11 +13,15 @@ import {
   updateTableFooter,
   invoiceIdNumberContainerChange,
 } from "./functionsForInvoices.js";
+import { invoice } from "./invoiceClass.js";
 
 (async () => {
   // Import issuers and clients form database
   const issuers = await fetchCompanies("http://localhost:8000/allissuers");
   const clients = await fetchCompanies("http://localhost:8000/allclients");
+
+  // initialize the invoice object - later data will be sent to the database
+  const invoiceObj = new invoice();
 
   console.log("Issuer: ", issuers);
   console.log("Clients: ", clients);
@@ -311,6 +315,7 @@ import {
 
   const btnSaveInvoice = document.querySelector(".save-invoice-btn");
   btnSaveInvoice.addEventListener("click", () => {
-    console.log(invoiceItems);
+    // console.log(invoiceItems);
+    invoiceObj.idInvoice = "adsdasdasd";
   });
 })();
