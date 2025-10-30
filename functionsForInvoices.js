@@ -77,7 +77,7 @@ export function updateCompanieDetails(companieType, selectedCompanie) {
 }
 
 // Update Lead Time
-export function updateLeadTime(selectDate, selectDueDate) {
+export function updateLeadTime(selectDate, selectDueDate, invoiceObj) {
   const rawDate = selectDate.value;
   const rawDueDate = selectDueDate.value;
 
@@ -93,6 +93,7 @@ export function updateLeadTime(selectDate, selectDueDate) {
 
     // Display in the lead time field
     leadTimeInput.value = diffDays >= 0 ? diffDays : 0; // avoid negative numbers
+    invoiceObj.leadTime = diffDays;
   }
 }
 

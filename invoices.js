@@ -108,7 +108,8 @@ import { invoice } from "./invoiceClass.js";
       `
     );
 
-    updateLeadTime(selectDate, selectDueDate);
+    updateLeadTime(selectDate, selectDueDate, invoiceObj);
+    invoiceObj.issuedDate = formattedDate;
   });
 
   // Populate DueDate
@@ -140,7 +141,8 @@ import { invoice } from "./invoiceClass.js";
       `
     );
 
-    updateLeadTime(selectDate, selectDueDate);
+    updateLeadTime(selectDate, selectDueDate, invoiceObj);
+    invoiceObj.dueDate = formattedDueDate;
   });
 
   // Handle Lead Time input → auto-calculate Due Date
@@ -171,12 +173,17 @@ import { invoice } from "./invoiceClass.js";
       // Update the Due Date variable outside the event listener
       selectedDueDate = formattedDueDate;
 
+      // obdate the invoice object if the due date changes
+      invoiceObj.dueDate = formattedDueDate;
+
       // Update the visible due date container
       const dueDateContainer = document.querySelector(".due-date");
       dueDateContainer.innerHTML = `
       <h2 class="date">Data scadentă: <span>${formattedDueDate}</span></h2>
     `;
     }
+
+    invoiceObj.leadTime = leadTimeDays;
   });
 
   // *** ADD ITEMS SECTION ***
