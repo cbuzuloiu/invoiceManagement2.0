@@ -76,6 +76,7 @@ import { invoice } from "./invoiceClass.js";
     selectedClient = clients.find((client) => client.id === selectedClientId);
 
     updateCompanieDetails("client", selectedClient);
+    invoiceObj.idClient = selectedClient.id;
   });
 
   // Populate Date
