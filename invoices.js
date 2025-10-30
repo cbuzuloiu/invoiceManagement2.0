@@ -11,6 +11,7 @@ import {
   addInvoiceItemPrice,
   addInvoiceItemVat,
   updateTableFooter,
+  invoiceIdNumberContainerChange,
 } from "./functionsForInvoices.js";
 
 (async () => {
@@ -45,6 +46,20 @@ import {
     );
     console.log(invoices);
 
+    let invoiceId;
+
+    if (invoices.data) {
+      console.log("We have an object");
+      console.log(selectedIssuer?.name?.[0] ?? ""); // "" if name is undefined or empty
+
+      const firstLetterOfIssuerName = selectedIssuer?.name?.[0] ?? ""; // "" if name is undefined or empty
+
+      invoiceId = `${firstLetterOfIssuerName}-${selectedIssuer.cui}-1`;
+
+      console.log(invoiceId);
+    }
+
+    invoiceIdNumberContainerChange(invoiceId);
     // ***
   });
 

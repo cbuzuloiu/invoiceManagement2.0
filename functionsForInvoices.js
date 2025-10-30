@@ -292,3 +292,9 @@ export function updateTableFooter(invoiceItems) {
   containerTotalVat.textContent = totalVat;
   containerTotal.textContent = total;
 }
+
+// function that updates the invoice id in the invoice section
+export function invoiceIdNumberContainerChange(invoiceId) {
+  const containerInvoiceId = document.querySelector("#invoice-id");
+  containerInvoiceId.textContent = invoiceId;
+}
