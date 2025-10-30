@@ -23,9 +23,6 @@ import { invoice } from "./invoiceClass.js";
   // initialize the invoice object - later data will be sent to the database
   const invoiceObj = new invoice();
 
-  console.log("Issuer: ", issuers);
-  console.log("Clients: ", clients);
-
   // Populate Issuer <select>
   const selectIssuer = selectCompany("issuer", issuers);
   let selectedIssuer = null; // variable to store the selected issuer form the event listener
@@ -37,34 +34,23 @@ import { invoice } from "./invoiceClass.js";
     // variable has to be declared outside the event listener
     selectedIssuer = issuers.find((issuer) => issuer.id === selectedIssuerId);
 
-    console.log("****************************************");
-    console.log("Selected Issuer is: ", selectedIssuer);
-
     updateCompanieDetails("issuer", selectedIssuer);
 
     // *** Get all invoices for Issuer by ID
 
-    console.log(selectedIssuer.id);
     const invoices = await fetchCompanies(
       `http://localhost:8000/allissuerinvoices/${selectedIssuer.id}`
     );
-    console.log(invoices);
 
     let invoiceId;
 
     if (invoices.data) {
-      console.log("We have an object");
-      console.log(selectedIssuer?.name?.[0] ?? ""); // "" if name is undefined or empty
-
       const firstLetterOfIssuerName = selectedIssuer?.name?.[0] ?? ""; // "" if name is undefined or empty
 
       invoiceId = `${firstLetterOfIssuerName}-${selectedIssuer.cui}-1`;
-
-      console.log(invoiceId);
     }
 
     if (invoices.length > 0) {
-      console.log(invoices.length);
       const firstLetterOfIssuerName = selectedIssuer?.name?.[0] ?? ""; // "" if name is undefined or empty
 
       invoiceId = `${firstLetterOfIssuerName}-${selectedIssuer.cui}-${
@@ -73,6 +59,7 @@ import { invoice } from "./invoiceClass.js";
     }
 
     invoiceIdNumberContainerChange(invoiceId);
+    invoiceObj.idInvoice = invoiceId;
     // ***
   });
 
@@ -87,7 +74,6 @@ import { invoice } from "./invoiceClass.js";
     // variable has to be declared outside the event listener
     selectedClient = clients.find((client) => client.id === selectedClientId);
 
-    console.log("Selected Client is: ", selectedClient);
     updateCompanieDetails("client", selectedClient);
   });
 
@@ -193,7 +179,6 @@ import { invoice } from "./invoiceClass.js";
 
   // *** ADD ITEMS SECTION ***
   const selectItemsSections = document.querySelectorAll(".items-section-item");
-  console.log(selectItemsSections);
 
   class invoiceItem {
     constructor(id, itemDescription = "", quantity = "", price = "", vat = "") {
@@ -209,12 +194,9 @@ import { invoice } from "./invoiceClass.js";
   const invoiceItems = [];
 
   const bodyDataContainer = document.querySelector(".body-data");
-  console.log(bodyDataContainer);
 
   // ADD NEW ITEM SECTION IN THE INVOICE
   addNewItemSectionInTheInvoice(invoiceItems, invoiceItem, bodyDataContainer);
-
-  console.log("Initial invoice items:", invoiceItems);
 
   // ADDING ITEMS LOGIC
   const selectInvoiceItem = document.querySelectorAll(".invoice-item");
@@ -239,8 +221,6 @@ import { invoice } from "./invoiceClass.js";
   // *** ADD NEW ITEM ***
   const addNewItemBtn = document.querySelector(".add-item-btn");
   const insertItemPosition = document.querySelector(".invoice-nav");
-  console.log(addNewItemBtn);
-  console.log(insertItemPosition);
 
   addNewItemBtn.addEventListener("click", () => {
     insertItemPosition.insertAdjacentHTML(
@@ -307,8 +287,6 @@ import { invoice } from "./invoiceClass.js";
 
     // Add new vat
     addInvoiceItemVat(selectItemVat, invoiceItems, itemValue);
-
-    console.log("New Invoice Items List:", invoiceItems);
   });
 
   // ****
@@ -316,6 +294,6 @@ import { invoice } from "./invoiceClass.js";
   const btnSaveInvoice = document.querySelector(".save-invoice-btn");
   btnSaveInvoice.addEventListener("click", () => {
     // console.log(invoiceItems);
-    invoiceObj.idInvoice = "adsdasdasd";
+    console.log(invoiceObj);
   });
 })();

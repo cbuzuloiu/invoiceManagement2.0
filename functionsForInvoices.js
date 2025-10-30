@@ -81,9 +81,6 @@ export function updateLeadTime(selectDate, selectDueDate) {
   const rawDate = selectDate.value;
   const rawDueDate = selectDueDate.value;
 
-  console.log(rawDate);
-  console.log(rawDueDate);
-
   const leadTimeInput = document.querySelector("#invoice-lead-time");
 
   // Only proceed if both fields are filled
@@ -93,7 +90,6 @@ export function updateLeadTime(selectDate, selectDueDate) {
 
     const diffMs = date2 - date1; // milliseconds difference
     const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24)); // convert to days
-    console.log(diffDays);
 
     // Display in the lead time field
     leadTimeInput.value = diffDays >= 0 ? diffDays : 0; // avoid negative numbers
@@ -107,13 +103,8 @@ export function priceValueUpdate(invoiceItems, index) {
   );
 
   if (invoiceItems[index].quantity !== "" && invoiceItems[index].price !== "") {
-    console.log(invoiceItems[index].quantity);
-    console.log(invoiceItems[index].price);
-
     const itemValue =
       Number(invoiceItems[index].quantity) * Number(invoiceItems[index].price);
-
-    console.log("Total Item Value: ", itemValue);
 
     selectItemContainerPriceValue.textContent = itemValue;
 
@@ -126,7 +117,6 @@ export function vatValueUpdate(itemValue, invoiceItems, index) {
   const selectItemContainerVatPrice = document.querySelector(
     `.item-${index + 1}-vat`
   );
-  console.log(itemValue);
 
   const vatValuePrice =
     Number(itemValue) * (Number(invoiceItems[index].vat) / 100);
@@ -143,7 +133,6 @@ export function addNewItemSectionInTheInvoice(
   bodyDataContainer
 ) {
   const newItemId = invoiceItems.length + 1;
-  console.log(newItemId);
 
   const item = new invoiceItem(newItemId);
   invoiceItems.push(item);
@@ -172,21 +161,12 @@ export function addNewItemSectionInTheInvoice(
 export function addInvoiceItemDescription(selectInvoiceItem, invoiceItems) {
   selectInvoiceItem.forEach((itemInput, index) => {
     itemInput.addEventListener("change", () => {
-      // console.log("Index of the item is: ", index);
       const selectedValue = itemInput.value;
-      // console.log(selectedValue);
-
       const selectItemContainer = document.querySelector(
         `.item-${index + 1}-itemDescription`
       );
-      // console.log(selectItemContainer);
-      // console.log("Selected item:", selectedValue);
 
-      // Assume for now you want to populate the FIRST invoice item
-      // Later we’ll map this dynamically (based on which section is active)
       invoiceItems[index].itemDescription = selectedValue;
-
-      // console.log("Updated invoice items:", invoiceItems);
 
       selectItemContainer.textContent = selectedValue;
     });
@@ -207,8 +187,6 @@ export function addInvoiceItemQt(selectItemQt, invoiceItems, itemValue) {
 
       itemValue = priceValueUpdate(invoiceItems, index);
       vatValueUpdate(itemValue, invoiceItems, index);
-      console.log(itemValue);
-      console.log(invoiceItems[index]);
 
       // Update totals in the table footre
       updateTableFooter(invoiceItems);
@@ -232,7 +210,6 @@ export function addInvoiceItemPrice(selectItemPrice, invoiceItems, itemValue) {
 
       itemValue = priceValueUpdate(invoiceItems, index);
       vatValueUpdate(itemValue, invoiceItems, index);
-      console.log(itemValue);
 
       // Update totals in the table footre
       updateTableFooter(invoiceItems);
@@ -278,7 +255,6 @@ export function updateTableFooter(invoiceItems) {
   let total = 0;
 
   invoiceItems.forEach((item) => {
-    console.log(item.itemDescription);
     const priceValue = Number(item.quantity) * Number(item.price);
     const itemVat = priceValue * (Number(item.vat) / 100);
 
