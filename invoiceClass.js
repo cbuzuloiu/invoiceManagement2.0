@@ -11,4 +11,11 @@ export class invoice {
     this.totalVat = "";
     this.grandTotal = "";
   }
+
+  hasEmptyFields() {
+    // check if any field in the object array is empty
+    return Object.values(this).some(
+      (value) => value === undefined || value === null || value === ""
+    );
+  }
 }

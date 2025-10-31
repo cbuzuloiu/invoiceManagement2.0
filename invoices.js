@@ -322,11 +322,7 @@ import { invoice } from "./invoiceClass.js";
     console.log(invoiceObj);
 
     // check if any field in the object array is empty
-    const isAnyEmpty = Object.values(invoiceObj).some(
-      (value) => value === undefined || value === null || value === ""
-    );
-
-    if (isAnyEmpty) {
+    if (invoiceObj.hasEmptyFields()) {
       console.log("Some invoice fields are empty!");
     }
   });
