@@ -219,13 +219,28 @@ import { invoice } from "./invoiceClass.js";
   let itemValue = 0; // must be declared before quantity, price and vat event listeners
 
   // QUANTITY
-  itemValue = addInvoiceItemQt(selectItemQt, invoiceItems, itemValue);
+  itemValue = addInvoiceItemQt(
+    selectItemQt,
+    invoiceItems,
+    itemValue,
+    invoiceObj
+  );
 
   // PRICE
-  itemValue = addInvoiceItemPrice(selectItemPrice, invoiceItems, itemValue);
+  itemValue = addInvoiceItemPrice(
+    selectItemPrice,
+    invoiceItems,
+    itemValue,
+    invoiceObj
+  );
 
   // VAT
-  itemValue = addInvoiceItemVat(selectItemVat, invoiceItems, itemValue);
+  itemValue = addInvoiceItemVat(
+    selectItemVat,
+    invoiceItems,
+    itemValue,
+    invoiceObj
+  );
 
   // *** ADD NEW ITEM ***
   const addNewItemBtn = document.querySelector(".add-item-btn");
@@ -289,13 +304,13 @@ import { invoice } from "./invoiceClass.js";
     addInvoiceItemDescription(selectInvoiceItem, invoiceItems);
 
     // Add new item quantity
-    addInvoiceItemQt(selectItemQt, invoiceItems, itemValue);
+    addInvoiceItemQt(selectItemQt, invoiceItems, itemValue, invoiceObj);
 
     // Add new item price
-    addInvoiceItemPrice(selectItemPrice, invoiceItems, itemValue);
+    addInvoiceItemPrice(selectItemPrice, invoiceItems, itemValue, invoiceObj);
 
     // Add new vat
-    addInvoiceItemVat(selectItemVat, invoiceItems, itemValue);
+    addInvoiceItemVat(selectItemVat, invoiceItems, itemValue, invoiceObj);
   });
 
   // ****
@@ -303,6 +318,7 @@ import { invoice } from "./invoiceClass.js";
   const btnSaveInvoice = document.querySelector(".save-invoice-btn");
   btnSaveInvoice.addEventListener("click", () => {
     // console.log(invoiceItems);
+    invoiceObj.status = "sent";
     console.log(invoiceObj);
   });
 })();

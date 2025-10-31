@@ -175,7 +175,12 @@ export function addInvoiceItemDescription(selectInvoiceItem, invoiceItems) {
 }
 
 // QUANTITY
-export function addInvoiceItemQt(selectItemQt, invoiceItems, itemValue) {
+export function addInvoiceItemQt(
+  selectItemQt,
+  invoiceItems,
+  itemValue,
+  invoiceObj
+) {
   selectItemQt.forEach((itemInput, index) => {
     itemInput.addEventListener("change", () => {
       const selectedItemQt = itemInput.value;
@@ -190,7 +195,7 @@ export function addInvoiceItemQt(selectItemQt, invoiceItems, itemValue) {
       vatValueUpdate(itemValue, invoiceItems, index);
 
       // Update totals in the table footre
-      updateTableFooter(invoiceItems);
+      updateTableFooter(invoiceItems, invoiceObj);
 
       return itemValue;
     });
@@ -198,7 +203,12 @@ export function addInvoiceItemQt(selectItemQt, invoiceItems, itemValue) {
 }
 
 // PRICE
-export function addInvoiceItemPrice(selectItemPrice, invoiceItems, itemValue) {
+export function addInvoiceItemPrice(
+  selectItemPrice,
+  invoiceItems,
+  itemValue,
+  invoiceObj
+) {
   selectItemPrice.forEach((itemInput, index) => {
     itemInput.addEventListener("change", () => {
       const selectedItemPrice = itemInput.value;
@@ -213,7 +223,7 @@ export function addInvoiceItemPrice(selectItemPrice, invoiceItems, itemValue) {
       vatValueUpdate(itemValue, invoiceItems, index);
 
       // Update totals in the table footre
-      updateTableFooter(invoiceItems);
+      updateTableFooter(invoiceItems, invoiceObj);
 
       return itemValue;
     });
@@ -221,7 +231,12 @@ export function addInvoiceItemPrice(selectItemPrice, invoiceItems, itemValue) {
 }
 
 // VAT
-export function addInvoiceItemVat(selectItemVat, invoiceItems, itemValue) {
+export function addInvoiceItemVat(
+  selectItemVat,
+  invoiceItems,
+  itemValue,
+  invoiceObj
+) {
   selectItemVat.forEach((itemInput, index) => {
     itemInput.addEventListener("change", () => {
       const selectedItemVat = itemInput.value;
@@ -237,7 +252,7 @@ export function addInvoiceItemVat(selectItemVat, invoiceItems, itemValue) {
       vatValueUpdate(itemValue, invoiceItems, index);
 
       // Update totals in the table footre
-      updateTableFooter(invoiceItems);
+      updateTableFooter(invoiceItems, invoiceObj);
 
       return itemValue;
     });
@@ -245,7 +260,7 @@ export function addInvoiceItemVat(selectItemVat, invoiceItems, itemValue) {
 }
 
 // Update totals in the table footre
-export function updateTableFooter(invoiceItems) {
+export function updateTableFooter(invoiceItems, invoiceObj) {
   const containerTotalWithoutVat = document.querySelector(".total-without-vat");
 
   const containerTotalVat = document.querySelector(".total-vat");
@@ -268,6 +283,10 @@ export function updateTableFooter(invoiceItems) {
   containerTotalWithoutVat.textContent = totalWithoutVat;
   containerTotalVat.textContent = totalVat;
   containerTotal.textContent = total;
+
+  invoiceObj.totalWithoutVat = totalWithoutVat;
+  invoiceObj.totalVat = totalVat;
+  invoiceObj.grandTotal = total;
 }
 
 // function that updates the invoice id in the invoice section
