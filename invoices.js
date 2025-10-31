@@ -320,5 +320,14 @@ import { invoice } from "./invoiceClass.js";
     // console.log(invoiceItems);
     invoiceObj.status = "sent";
     console.log(invoiceObj);
+
+    // check if any field in the object array is empty
+    const isAnyEmpty = Object.values(invoiceObj).some(
+      (value) => value === undefined || value === null || value === ""
+    );
+
+    if (isAnyEmpty) {
+      console.log("Some invoice fields are empty!");
+    }
   });
 })();
