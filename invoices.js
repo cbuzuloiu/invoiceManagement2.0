@@ -14,6 +14,7 @@ import {
   invoiceIdNumberContainerChange,
 } from "./functionsForInvoices.js";
 import { invoice } from "./invoiceClass.js";
+import { toSnakCeaseObject, toCamelCaseObject } from "./convertCase.js";
 
 (async () => {
   // Import issuers and clients form database
@@ -316,7 +317,7 @@ import { invoice } from "./invoiceClass.js";
   // ****
 
   const btnSaveInvoice = document.querySelector(".save-invoice-btn");
-  btnSaveInvoice.addEventListener("click", () => {
+  btnSaveInvoice.addEventListener("click", async () => {
     // console.log(invoiceItems);
     invoiceObj.status = "sent";
     console.log(invoiceObj);
@@ -325,5 +326,21 @@ import { invoice } from "./invoiceClass.js";
     if (invoiceObj.hasEmptyFields()) {
       console.log("Some invoice fields are empty!");
     }
+
+    console.log(JSON.stringify(invoiceObj));
+
+    // Convert camelCase to snake_case for backend
+    const invoicePayload = toSnakCeaseObject(invoiceObj);
+    console.log(invoicePayload);
+
+    const invoiceResponse = await fetch("http://127.0.0.1:8000/addinvoice", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(invoicePayload),
+    });
+
+    const invoiceResult = await invoiceResponse.json();
+    console.log(invoiceResult);
+    alert(invoiceResult.message);
   });
 })();
